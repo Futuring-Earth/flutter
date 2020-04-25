@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:provider/provider.dart';
 
-class ProjectsView extends StatelessWidget {
+class ChallengesView extends StatelessWidget {
   static const routeName = '/projects_view';
 
   @override

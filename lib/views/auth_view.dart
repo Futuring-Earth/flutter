@@ -63,7 +63,8 @@ class AuthView extends StatelessWidget {
                       child: Image.asset(
                         'assets/images/Futuring_Logo.png',
                         fit: BoxFit.cover,
-                        color: Theme.of(context).accentTextTheme.title.color,
+                        color:
+                            Theme.of(context).accentTextTheme.headline6.color,
                         width: 150,
                       ),
                     ),

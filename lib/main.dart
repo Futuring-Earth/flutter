@@ -8,8 +8,9 @@ import './view_models/activity/activity_viewmodel.dart';
 import './views/activity/activity_view.dart';
 import './views/tabs_view.dart';
 import './views/profile/profile_view.dart';
-import './views/chat/chat_view.dart';
-import './views/projects/projects_view.dart';
+import './views/inspiration/inspiration_view.dart';
+import './views/challenges/challenges_view.dart';
+import './views/challenges/edit_challenge_view.dart';
 import 'services/auth_service.dart';
 import 'views/auth_view.dart';
 import 'views/splash_view.dart';
@@ -52,7 +53,7 @@ class MyApp extends StatelessWidget {
           title: 'Futuring',
           theme: ThemeData(
             primarySwatch: Colors.blue,
-            accentColor: Colors.yellow,
+            accentColor: Colors.purple,
             fontFamily: 'Lato',
             textTheme: ThemeData.light().textTheme.copyWith(
                   title: TextStyle(
@@ -85,9 +86,10 @@ class MyApp extends StatelessWidget {
           routes: {
             ProfileView.routeName: (ctx) => ProfileView(),
             ActivityView.routeName: (ctx) => ActivityView(),
-            ChatView.routeName: (ctx) => ChatView(),
-            ProjectsView.routeName: (ctx) => ProjectsView(),
+            InspirationView.routeName: (ctx) => InspirationView(),
+            ChallengesView.routeName: (ctx) => ChallengesView(),
             SettingsView.routeName: (ctx) => SettingsView(),
+            EditChallengesView.routeName: (ctx) => EditChallengesView(),
           },
         ),
       ),

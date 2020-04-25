@@ -27,11 +27,17 @@ class HttpService {
     }
   }
 
-  static Future<dynamic> addItem<T extends BaseModel>(
+  static Future<T> addItem<T extends BaseModel>(
       T item, String tableName) async {
-    final url = 'https://test-f0d3f.firebaseio.com/$tableName.json';
     try {
-      return http.post(url, body: json.encode(item.toJson()));
+      final url = 'https://test-f0d3f.firebaseio.com/$tableName.json';
+      final response = await http.post(url, body: json.encode(item.toJson()));
+      final extractedData = json.decode(response.body) as Map<String, dynamic>;
+
+      if (extractedData == null) {
+        return null;
+      }
+      return item.fromJson(extractedData);
     } catch (error) {
       throw throw HttpException(error);
     }
