@@ -7,13 +7,17 @@ class AdaptiveScaffold extends StatelessWidget {
   final String title;
   final List<Widget> actions;
   final Widget body;
+  final Widget drawer;
+  final Widget bottomNavigationBar;
   final Function centerButtonAction;
 
   AdaptiveScaffold(
       {@required this.title,
       @required this.body,
       this.actions,
-      this.centerButtonAction});
+      this.centerButtonAction,
+      this.drawer,
+      this.bottomNavigationBar});
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +57,8 @@ class AdaptiveScaffold extends StatelessWidget {
         : Scaffold(
             appBar: appBar,
             body: pageBody,
+            bottomNavigationBar: this.bottomNavigationBar,
+            drawer: this.drawer,
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,
             floatingActionButton: Platform.isIOS
