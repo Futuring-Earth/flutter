@@ -8,11 +8,14 @@ class ActivityViewModel with ChangeNotifier {
     //TODO: load the initial data and default settings
   }
 
+  final String authToken;
+  final String userId;
   List<Action> _actions = [];
-
   List<Action> get actions {
     return [..._actions];
   }
+
+  ActivityViewModel(this.authToken, this.userId, this._actions);
 
   Action findById(String id) {
     return _actions.firstWhere((item) => item.id == id);

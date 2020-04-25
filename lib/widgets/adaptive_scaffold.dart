@@ -60,7 +60,7 @@ class AdaptiveScaffold extends StatelessWidget {
             bottomNavigationBar: this.bottomNavigationBar,
             drawer: this.drawer,
             floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
+                FloatingActionButtonLocation.centerDocked,
             floatingActionButton: Platform.isIOS
                 ? Container()
                 : FloatingActionButton(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 class ProjectsView extends StatelessWidget {
   static const routeName = '/projects_view';
