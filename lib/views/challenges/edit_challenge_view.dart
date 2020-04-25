@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:app/widgets/image_input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +20,12 @@ class _EditChallengeViewState extends State<EditChallengesView> {
   final _imageUrlController = TextEditingController();
   final _imageUrlFocusNode = FocusNode();
   final _form = GlobalKey<FormState>();
+  File _pickedImage;
+
+  void _selectImage(File pickedImage) {
+    _pickedImage = pickedImage;
+  }
+
   var _editedChallenge = Challenge(
     title: '',
     description: '',
@@ -97,13 +106,15 @@ class _EditChallengeViewState extends State<EditChallengesView> {
 
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
-    if (!isValid) {
+    if (!isValid || _pickedImage == null) {
       return;
     }
     _form.currentState.save();
     setState(() {
       _isLoading = true;
     });
+    //TODO: Save the image: _pickedImage
+
     if (_editedChallenge.id != null) {
       await Provider.of<ChallengeViewModel>(context, listen: false)
           .updateChallenge(_editedChallenge);
@@ -253,73 +264,7 @@ class _EditChallengeViewState extends State<EditChallengesView> {
                             overallRaiting: _editedChallenge.overallRaiting);
                       },
                     ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: <Widget>[
-                        Container(
-                          width: 100,
-                          height: 100,
-                          margin: EdgeInsets.only(
-                            top: 8,
-                            right: 10,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 1,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          child: _imageUrlController.text.isEmpty
-                              ? Text('Enter a URL')
-                              : FittedBox(
-                                  child: Image.network(
-                                    _imageUrlController.text,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            decoration: InputDecoration(labelText: 'Image URL'),
-                            keyboardType: TextInputType.url,
-                            textInputAction: TextInputAction.done,
-                            controller: _imageUrlController,
-                            focusNode: _imageUrlFocusNode,
-                            onFieldSubmitted: (_) {
-                              _saveForm();
-                            },
-                            validator: (value) {
-                              if (value.isEmpty) {
-                                return 'Please enter an image URL.';
-                              }
-                              if (!value.startsWith('http') &&
-                                  !value.startsWith('https')) {
-                                return 'Please enter a valid URL.';
-                              }
-                              if (!value.endsWith('.png') &&
-                                  !value.endsWith('.jpg') &&
-                                  !value.endsWith('.jpeg')) {
-                                return 'Please enter a valid image URL.';
-                              }
-                              return null;
-                            },
-                            onSaved: (value) {
-                              _editedChallenge = Challenge(
-                                  title: _editedChallenge.title,
-                                  description: _editedChallenge.description,
-                                  imageUrl: value,
-                                  id: _editedChallenge.id,
-                                  duration: _editedChallenge.duration,
-                                  minTeamSize: _editedChallenge.minTeamSize,
-                                  maxTeamSize: _editedChallenge.maxTeamSize,
-                                  co2Impact: _editedChallenge.co2Impact,
-                                  overallRaiting:
-                                      _editedChallenge.overallRaiting);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
+                    ImageInput(_selectImage),
                   ],
                 ),
               ),
