@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import './activity/activity_view.dart';
 import './profile/profile_view.dart';
 import '../widgets/adaptive_scaffold.dart';
+import 'profile/profile_appdrawer.dart';
 
 class TabsScreen extends StatefulWidget {
   @override
@@ -49,6 +50,7 @@ class _TabsScreenState extends State<TabsScreen> {
     return AdaptiveScaffold(
       title: _pages[_selectedPageIndex]['title'],
       body: _pages[_selectedPageIndex]['page'],
+      drawer: _selectedPageIndex == 2 ? ProfileDrawer() : null,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectPage,
         backgroundColor: Theme.of(context).primaryColor,

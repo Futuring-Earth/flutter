@@ -1,4 +1,5 @@
 import 'package:app/views/activity/activity_view.dart';
+import 'package:app/views/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -50,8 +51,8 @@ class MyApp extends StatelessWidget {
         builder: (ctx, auth, _) => MaterialApp(
           title: 'Futuring',
           theme: ThemeData(
-            primarySwatch: Colors.purple,
-            accentColor: Colors.deepOrange,
+            primarySwatch: Colors.blue,
+            accentColor: Colors.yellow,
             fontFamily: 'Lato',
             textTheme: ThemeData.light().textTheme.copyWith(
                   title: TextStyle(
@@ -86,6 +87,7 @@ class MyApp extends StatelessWidget {
             ActivityView.routeName: (ctx) => ActivityView(),
             ChatView.routeName: (ctx) => ChatView(),
             ProjectsView.routeName: (ctx) => ProjectsView(),
+            SettingsView.routeName: (ctx) => SettingsView(),
           },
         ),
       ),
