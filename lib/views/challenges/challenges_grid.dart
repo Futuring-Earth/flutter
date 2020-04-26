@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
-import '../../view_models/challenges/challenge_viewmodel.dart';
-import '../../models/challenge.dart';
-import './challenge_item.dart';
+// import '../../view_models/challenges/challenge_viewmodel.dart';
+// import '../../models/challenge.dart';
+// import './challenge_item_detail.dart';
 
 class ChallengesGrid extends StatelessWidget {
   final bool showFavs;

@@ -4,25 +4,25 @@ import '../../models/action.dart';
 import '../../services/action_graph_service.dart' as dbService;
 
 class ActivityViewModel with ChangeNotifier {
-  Future<void> initialize() async {
-    //TODO: load the initial data and default settings
-  }
-
-  final String authToken;
-  final String userId;
+  String _authToken;
   List<Action> _actions = [];
   List<Action> get actions {
     return [..._actions];
   }
 
-  ActivityViewModel(this.authToken, this.userId, this._actions);
+  ActivityViewModel();
+
+  void update(String authToken, List<Action> actions) {
+    this._authToken = authToken;
+    this._actions = actions;
+  }
 
   Action findById(String id) {
     return _actions.firstWhere((item) => item.id == id);
   }
 
   Future<void> fetchAndSetActions() async {
-    _actions = await dbService.ActionGraphService.fetchActions();
+    _actions = await dbService.ActionGraphService.fetchActions(_authToken);
     notifyListeners();
   }
 
@@ -32,7 +32,8 @@ class ActivityViewModel with ChangeNotifier {
     if (itemIndex >= 0) {
       _actions[itemIndex] = udpatedAction;
       notifyListeners();
-      return dbService.ActionGraphService.updateActions(udpatedAction);
+      return dbService.ActionGraphService.updateActions(
+          udpatedAction, _authToken);
     } else {
       return false;
     }

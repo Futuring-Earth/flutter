@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import './view_models/activity/activity_viewmodel.dart';
+import './view_models/challenges/challenge_viewmodel.dart';
 import './views/activity/activity_view.dart';
 import './views/tabs_view.dart';
 import './views/profile/profile_view.dart';
@@ -16,6 +17,7 @@ import 'views/auth_view.dart';
 import 'views/splash_view.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitUp,
@@ -31,12 +33,27 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider.value(
           value: Auth(),
         ),
+        ChangeNotifierProxyProvider<Auth, ChallengeViewModel>(
+          create: (ctx) => ChallengeViewModel(),
+          update: (ctx, auth, previousInstance) => previousInstance
+            ..update(
+              auth.token,
+              auth.userId,
+              previousInstance == null ? [] : previousInstance.challanges,
+            ),
+          // update: (ctx, auth, previuosItems) => ActivityViewModel(
+          //   auth.token,
+          //   auth.userId,
+          //   previuosItems == null ? [] : previuosItems.actions,
+          // ),
+        ),
         ChangeNotifierProxyProvider<Auth, ActivityViewModel>(
-          builder: (ctx, auth, previuosVM) => ActivityViewModel(
-            auth.token,
-            auth.userId,
-            previuosVM == null ? [] : previuosVM.actions,
-          ),
+          create: (ctx) => ActivityViewModel(),
+          update: (ctx, auth, previuosItems) => previuosItems
+            ..update(
+              auth.token,
+              previuosItems == null ? [] : previuosItems.actions,
+            ),
         ),
         // ChangeNotifierProvider.value(
         //   value: ActivityViewModel(),
@@ -56,7 +73,7 @@ class MyApp extends StatelessWidget {
             accentColor: Colors.purple,
             fontFamily: 'Lato',
             textTheme: ThemeData.light().textTheme.copyWith(
-                  title: TextStyle(
+                  headline6: TextStyle(
                     fontFamily: 'OpenSans',
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -65,7 +82,7 @@ class MyApp extends StatelessWidget {
                 ),
             appBarTheme: AppBarTheme(
               textTheme: ThemeData.light().textTheme.copyWith(
-                    title: TextStyle(
+                    headline6: TextStyle(
                       fontFamily: 'OpenSans',
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

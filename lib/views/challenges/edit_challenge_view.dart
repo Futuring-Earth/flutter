@@ -161,7 +161,20 @@ class _EditChallengeViewState extends State<EditChallengesView> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.save),
-            onPressed: _saveForm,
+            onPressed: () async {
+              try {
+                _saveForm();
+              } catch (error) {
+                Scaffold.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'Saving failed!',
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                );
+              }
+            },
           ),
         ],
       ),

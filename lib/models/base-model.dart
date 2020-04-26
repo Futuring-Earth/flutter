@@ -43,6 +43,7 @@ class BaseModel {
     id = newModel.id;
     label = newModel.label;
   }
+
   factory BaseModel.fromJson(Map<String, dynamic> json) =>
       _$BaseModelFromJson(json);
 
