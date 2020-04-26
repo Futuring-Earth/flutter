@@ -26,7 +26,7 @@ class _TabsScreenState extends State<TabsScreen> {
       },
       {
         'page': ChallengesView(),
-        'title': 'My ctive Challanges',
+        'title': 'My Active Challanges',
       },
       {
         'page': ProfileView(),
