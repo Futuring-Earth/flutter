@@ -16,6 +16,7 @@ import './views/inspiration/inspiration_view.dart';
 import './views/challenges/challenges_view.dart';
 import './views/challenges/edit_challenge_view.dart';
 import 'services/auth_service.dart';
+import 'themes/gallery_theme_data.dart';
 import 'views/auth_view.dart';
 import 'views/splash_view.dart';
 
@@ -59,11 +60,6 @@ class MyApp extends StatelessWidget {
               auth.userId,
               previousInstance == null ? [] : previousInstance.challanges,
             ),
-          // update: (ctx, auth, previuosItems) => ActivityViewModel(
-          //   auth.token,
-          //   auth.userId,
-          //   previuosItems == null ? [] : previuosItems.actions,
-          // ),
         ),
         ChangeNotifierProxyProvider<Auth, ActivityViewModel>(
           create: (ctx) => ActivityViewModel(),
@@ -73,41 +69,34 @@ class MyApp extends StatelessWidget {
               previuosItems == null ? [] : previuosItems.actions,
             ),
         ),
-        // ChangeNotifierProvider.value(
-        //   value: ActivityViewModel(),
-        // ),
-        // ChangeNotifierProvider.value(
-        //   value: ProfileViewModel(),
-        // ),
-        // ChangeNotifierProvider.value(
-        //   value: MarketViewModel(),
-        // ),
       ],
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => MaterialApp(
           title: 'Futuring',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            accentColor: Colors.grey,
-            fontFamily: 'Lato',
-            textTheme: ThemeData.light().textTheme.copyWith(
-                  headline6: TextStyle(
-                    fontFamily: 'OpenSans',
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                  button: TextStyle(color: Colors.white),
-                ),
-            appBarTheme: AppBarTheme(
-              textTheme: ThemeData.light().textTheme.copyWith(
-                    headline6: TextStyle(
-                      fontFamily: 'OpenSans',
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-            ),
-          ),
+          theme: GalleryThemeData.lightThemeData,
+          darkTheme: GalleryThemeData.darkThemeData,
+          // theme: ThemeData(
+          //   primarySwatch: Colors.blue,
+          //   accentColor: Colors.grey,
+          //   fontFamily: 'Lato',
+          //   textTheme: ThemeData.light().textTheme.copyWith(
+          //         headline6: TextStyle(
+          //           fontFamily: 'OpenSans',
+          //           fontWeight: FontWeight.bold,
+          //           fontSize: 18,
+          //         ),
+          //         button: TextStyle(color: Colors.white),
+          //       ),
+          //   appBarTheme: AppBarTheme(
+          //     textTheme: ThemeData.light().textTheme.copyWith(
+          //           headline6: TextStyle(
+          //             fontFamily: 'OpenSans',
+          //             fontSize: 20,
+          //             fontWeight: FontWeight.bold,
+          //           ),
+          //         ),
+          //   ),
+          // ),
           home: auth.isAuth
               ? TabsScreen()
               : FutureBuilder(
