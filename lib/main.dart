@@ -1,3 +1,6 @@
+import 'dart:io' show Platform;
+
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:app/views/activity/activity_view.dart';
 import 'package:app/views/settings/settings_view.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +25,21 @@ void main() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitUp,
   ]);
+
+  //This global variable can be use to know when the app
+  //is running on the web. If kisweb = true is a web app
+  //to use the variable:
+  //  import 'package:flutter/foundation.dart' show kIsWeb;
+  bool kisweb;
+  try {
+    if (Platform.isAndroid || Platform.isIOS) {
+      kisweb = false;
+    } else {
+      kisweb = true;
+    }
+  } catch (e) {
+    kisweb = true;
+  }
   runApp(MyApp());
 }
 
@@ -70,7 +88,7 @@ class MyApp extends StatelessWidget {
           title: 'Futuring',
           theme: ThemeData(
             primarySwatch: Colors.blue,
-            accentColor: Colors.purple,
+            accentColor: Colors.grey,
             fontFamily: 'Lato',
             textTheme: ThemeData.light().textTheme.copyWith(
                   headline6: TextStyle(

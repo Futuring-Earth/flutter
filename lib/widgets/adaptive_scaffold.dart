@@ -40,6 +40,11 @@ class AdaptiveScaffold extends StatelessWidget {
             actions: actions,
           );
 
+    //SafeArea is basically a glorified Padding widget.
+    // If you wrap another widget with SafeArea , it adds any necessary
+    // padding needed to keep your widget from being blocked by the system
+    // status bar, notches, holes, rounded corners and other "creative"
+    // features by manufactures.
     final pageBody = SafeArea(
       child: Container(
         child: body,

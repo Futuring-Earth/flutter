@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:app/widgets/image_input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -106,7 +107,10 @@ class _EditChallengeViewState extends State<EditChallengesView> {
 
   Future<void> _saveForm() async {
     final isValid = _form.currentState.validate();
-    if (!isValid || _pickedImage == null) {
+    // kIsWeb: detect if you are running on the web using kIsWeb,
+    // a global constant indicating if the application was compiled
+    // to run on the web:
+    if (!isValid || (_pickedImage == null && !kIsWeb)) {
       return;
     }
     _form.currentState.save();
@@ -165,12 +169,20 @@ class _EditChallengeViewState extends State<EditChallengesView> {
               try {
                 _saveForm();
               } catch (error) {
+                Scaffold.of(context).hideCurrentSnackBar();
                 Scaffold.of(context).showSnackBar(
                   SnackBar(
                     content: Text(
                       'Saving failed!',
                       textAlign: TextAlign.center,
                     ),
+                    duration: Duration(seconds: 2),
+                    // action: SnackBarAction(
+                    //   label: 'UNDO',
+                    //   onPressed: () {
+                    //     CallSomeUndoFunction();
+                    // },
+                    // ),
                   ),
                 );
               }
