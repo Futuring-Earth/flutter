@@ -6,57 +6,31 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import 'package:gallery/data/gallery_options.dart';
-import 'package:gallery/layout/letter_spacing.dart';
-import 'package:gallery/layout/text_scale.dart';
-import 'package:gallery/studies/rally/colors.dart';
-import 'package:gallery/studies/rally/data.dart';
-import 'package:gallery/studies/rally/formatters.dart';
+import 'package:app/models/checkin.dart';
+import 'package:app/themes/colors.dart';
+import 'package:app/themes/futuring_options.dart';
+import 'package:app/layout/letter_spacing.dart';
+import 'package:app/layout/text_scale.dart';
+import 'package:app/helpers/formatters.dart';
 
-/// A colored piece of the [RallyPieChart].
-class RallyPieChartSegment {
-  const RallyPieChartSegment({this.color, this.value});
+/// A colored piece of the [CustomPieChart].
+class CustomPieChartSegment {
+  const CustomPieChartSegment({this.color, this.value});
 
   final Color color;
   final double value;
 }
 
-/// The max height and width of the [RallyPieChart].
+/// The max height and width of the [CustomPieChart].
 const pieChartMaxSize = 500.0;
 
-List<RallyPieChartSegment> buildSegmentsFromAccountItems(
-    List<AccountData> items) {
-  return List<RallyPieChartSegment>.generate(
+List<CustomPieChartSegment> buildSegmentsFromAccountItems(List<Checkin> items) {
+  return List<CustomPieChartSegment>.generate(
     items.length,
     (i) {
-      return RallyPieChartSegment(
-        color: RallyColors.accountColor(i),
-        value: items[i].primaryAmount,
-      );
-    },
-  );
-}
-
-List<RallyPieChartSegment> buildSegmentsFromBillItems(List<BillData> items) {
-  return List<RallyPieChartSegment>.generate(
-    items.length,
-    (i) {
-      return RallyPieChartSegment(
-        color: RallyColors.billColor(i),
-        value: items[i].primaryAmount,
-      );
-    },
-  );
-}
-
-List<RallyPieChartSegment> buildSegmentsFromBudgetItems(
-    List<BudgetData> items) {
-  return List<RallyPieChartSegment>.generate(
-    items.length,
-    (i) {
-      return RallyPieChartSegment(
-        color: RallyColors.budgetColor(i),
-        value: items[i].primaryAmount - items[i].amountUsed,
+      return CustomPieChartSegment(
+        color: CheckinColors.teamColor(i),
+        value: items[i].unitsAchived,
       );
     },
   );
@@ -64,20 +38,20 @@ List<RallyPieChartSegment> buildSegmentsFromBudgetItems(
 
 /// An animated circular pie chart to represent pieces of a whole, which can
 /// have empty space.
-class RallyPieChart extends StatefulWidget {
-  const RallyPieChart(
+class CustomPieChart extends StatefulWidget {
+  const CustomPieChart(
       {this.heroLabel, this.heroAmount, this.wholeAmount, this.segments});
 
   final String heroLabel;
   final double heroAmount;
   final double wholeAmount;
-  final List<RallyPieChartSegment> segments;
+  final List<CustomPieChartSegment> segments;
 
   @override
-  _RallyPieChartState createState() => _RallyPieChartState();
+  _CustomPieChartState createState() => _CustomPieChartState();
 }
 
-class _RallyPieChartState extends State<RallyPieChart>
+class _CustomPieChartState extends State<CustomPieChart>
     with SingleTickerProviderStateMixin {
   AnimationController controller;
   Animation<double> animation;
@@ -113,7 +87,7 @@ class _RallyPieChartState extends State<RallyPieChart>
   @override
   Widget build(BuildContext context) {
     return MergeSemantics(
-      child: _AnimatedRallyPieChart(
+      child: _AnimatedCustomPieChart(
         animation: animation,
         centerLabel: widget.heroLabel,
         centerAmount: widget.heroAmount,
@@ -124,8 +98,8 @@ class _RallyPieChartState extends State<RallyPieChart>
   }
 }
 
-class _AnimatedRallyPieChart extends AnimatedWidget {
-  const _AnimatedRallyPieChart({
+class _AnimatedCustomPieChart extends AnimatedWidget {
+  const _AnimatedCustomPieChart({
     Key key,
     this.animation,
     this.centerLabel,
@@ -138,7 +112,7 @@ class _AnimatedRallyPieChart extends AnimatedWidget {
   final String centerLabel;
   final double centerAmount;
   final double total;
-  final List<RallyPieChartSegment> segments;
+  final List<CustomPieChartSegment> segments;
 
   @override
   Widget build(BuildContext context) {
@@ -155,14 +129,14 @@ class _AnimatedRallyPieChart extends AnimatedWidget {
           : textTheme.headline5;
 
       // With a large text scale factor, we set a max font size.
-      if (GalleryOptions.of(context).textScaleFactor(context) > 1.0) {
+      if (FuturingOptions.of(context).textScaleFactor(context) > 1.0) {
         headlineStyle = headlineStyle.copyWith(
           fontSize: (headlineStyle.fontSize / reducedTextScale(context)),
         );
       }
 
       return DecoratedBox(
-        decoration: _RallyPieChartOutlineDecoration(
+        decoration: _CustomPieChartOutlineDecoration(
           maxFraction: animation.value,
           total: total,
           segments: segments,
@@ -189,17 +163,17 @@ class _AnimatedRallyPieChart extends AnimatedWidget {
   }
 }
 
-class _RallyPieChartOutlineDecoration extends Decoration {
-  const _RallyPieChartOutlineDecoration(
+class _CustomPieChartOutlineDecoration extends Decoration {
+  const _CustomPieChartOutlineDecoration(
       {this.maxFraction, this.total, this.segments});
 
   final double maxFraction;
   final double total;
-  final List<RallyPieChartSegment> segments;
+  final List<CustomPieChartSegment> segments;
 
   @override
   BoxPainter createBoxPainter([VoidCallback onChanged]) {
-    return _RallyPieChartOutlineBoxPainter(
+    return _CustomPieChartOutlineBoxPainter(
       maxFraction: maxFraction,
       wholeAmount: total,
       segments: segments,
@@ -207,13 +181,13 @@ class _RallyPieChartOutlineDecoration extends Decoration {
   }
 }
 
-class _RallyPieChartOutlineBoxPainter extends BoxPainter {
-  _RallyPieChartOutlineBoxPainter(
+class _CustomPieChartOutlineBoxPainter extends BoxPainter {
+  _CustomPieChartOutlineBoxPainter(
       {this.maxFraction, this.wholeAmount, this.segments});
 
   final double maxFraction;
   final double wholeAmount;
-  final List<RallyPieChartSegment> segments;
+  final List<CustomPieChartSegment> segments;
   static const double wholeRadians = 2 * math.pi;
   static const double spaceRadians = wholeRadians / 180;
 
@@ -260,7 +234,7 @@ class _RallyPieChartOutlineBoxPainter extends BoxPainter {
 
     // Paint a smaller inner circle to cover the painted arcs, so they are
     // display as segments.
-    final bgPaint = Paint()..color = RallyColors.primaryBackground;
+    final bgPaint = Paint()..color = CheckinColors.primaryBackground;
     canvas.drawArc(innerRect, 0, 2 * math.pi, true, bgPaint);
   }
 

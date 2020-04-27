@@ -16,7 +16,7 @@ import './views/inspiration/inspiration_view.dart';
 import './views/challenges/challenges_view.dart';
 import './views/challenges/edit_challenge_view.dart';
 import 'services/auth_service.dart';
-import 'themes/gallery_theme_data.dart';
+import 'themes/futuring_theme_data.dart';
 import 'views/auth_view.dart';
 import 'views/splash_view.dart';
 
@@ -73,8 +73,8 @@ class MyApp extends StatelessWidget {
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => MaterialApp(
           title: 'Futuring',
-          theme: GalleryThemeData.lightThemeData,
-          darkTheme: GalleryThemeData.darkThemeData,
+          theme: FuturingThemeData.lightThemeData,
+          darkTheme: FuturingThemeData.darkThemeData,
           // theme: ThemeData(
           //   primarySwatch: Colors.blue,
           //   accentColor: Colors.grey,

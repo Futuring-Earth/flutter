@@ -17,42 +17,57 @@
 
 // It is safe to start the watcher once and leave it running in the background.
 
+import 'package:flutter/foundation.dart';
+
 import 'package:json_annotation/json_annotation.dart';
 
-/// This allows the `Action` class to access private members in
+import './base-model.dart';
+
+/// This allows the `Checkin` class to access private members in
 /// the generated file. The value for this is *.g.dart, where
 /// the star denotes the source file name.
-part 'basemodel.g.dart';
+part 'checkin.g.dart';
 
 //To automatically build the part classes
 // flutter pub run build_runner build (one time build)
 // flutter pub run build_runner watch (continuous build)
-// if the above fails with code 78 run this:
-//  "flutter packages pub run build_runner build --delete-conflicting-outputs"
-//  more details here: https://github.com/dart-lang/json_serializable/issues/397
 
 /// An annotation for the code generator to know that this class needs the
 /// JSON serialization logic to be generated.
-@JsonSerializable()
-class BaseModel {
-  @JsonKey(name: 'id', ignore: false, required: true, defaultValue: null)
+@JsonSerializable(explicitToJson: true)
+class Checkin extends BaseModel {
+  @JsonKey(
+      name: 'checkinDate', ignore: false, required: true, defaultValue: null)
+  DateTime checkinDate;
+  @JsonKey(
+      name: 'challengeID', ignore: false, required: true, defaultValue: null)
+  String challengeID;
+  @JsonKey(name: 'userID', ignore: false, required: true, defaultValue: null)
+  String userID;
+  @JsonKey(
+      name: 'unitsAchived', ignore: false, required: true, defaultValue: null)
+  double unitsAchived;
+  @JsonKey(name: 'unitType', ignore: false, required: true, defaultValue: null)
+  String unitType;
+
+  @override
   String id;
-  @JsonKey(name: 'label', ignore: false, required: true, defaultValue: null)
+  @override
   String label;
 
-  BaseModel({this.id, this.label});
+  Checkin(
+      {@required this.checkinDate,
+      @required this.challengeID,
+      @required this.userID,
+      @required this.id,
+      @required this.unitsAchived,
+      @required this.unitType,
+      label = 'checkin'});
 
-  BaseModel.copy(BaseModel newModel) {
-    id = newModel.id;
-    label = newModel.label;
-  }
+  @override
+  factory Checkin.fromJson(Map<String, dynamic> json) =>
+      _$CheckinFromJson(json);
 
-  factory BaseModel.fromJson(Map<String, dynamic> json) =>
-      _$BaseModelFromJson(json);
-
-  Map<String, dynamic> toJson() => _$BaseModelToJson(this);
-
-  BaseModel fromJson(Map<String, dynamic> json) {
-    return _$BaseModelFromJson(json);
-  }
+  @override
+  Map<String, dynamic> toJson() => _$CheckinToJson(this);
 }
