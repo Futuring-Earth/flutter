@@ -1,17 +1,28 @@
+import '../locator.dart';
+
 import 'package:app/models/challenge.dart';
-import 'http_service.dart' as server;
+import 'database_service.dart';
+import './http_service.dart';
 
 class ChallengeGraphService {
-  static const _tableName = 'challenges';
+  final _tableName = 'challenges';
+  final ctx;
+  DatabaseService _dbService;
 
-  static Future<List<Challenge>> fetchChallenges(
-      {String authToken, bool filterByUser = false, String userId = ''}) async {
+  ChallengeGraphService(this.ctx) {
+    _dbService = locator<HttpService>();
+  }
+
+  void update(DatabaseService dbService) {
+    this._dbService = dbService;
+  }
+
+  Future<List<Challenge>> fetchChallenges(
+      {bool filterByUser = false, String userId = ''}) async {
     try {
-      return server.HttpService.fetch<Challenge>(
+      return _dbService.fetch<Challenge>(
           tableName: _tableName,
           filterByUser: filterByUser,
-          userId: userId,
-          authToken: authToken,
           creator: (json) => new Challenge.fromJson(json));
     } catch (error) {
       throw (error);
@@ -34,30 +45,27 @@ class ChallengeGraphService {
   //   }
   // }
 
-  static Future<Challenge> addChallenge(
-      Challenge challenge, String authToken) async {
+  Future<Challenge> addChallenge(Challenge challenge) async {
     try {
-      return server.HttpService.addItem<Challenge>(challenge, _tableName,
-          authToken, (json) => new Challenge.fromJson(json));
+      return _dbService.addItem<Challenge>(
+          challenge, _tableName, (json) => new Challenge.fromJson(json));
     } catch (error) {
       throw (error);
     }
   }
 
-  static Future<bool> updateChallenges(
+  Future<bool> updateChallenges(
       Challenge udpatedChallenge, String authToken) async {
     try {
-      return server.HttpService.updateItem<Challenge>(
-          udpatedChallenge, _tableName, authToken);
+      return _dbService.updateItem<Challenge>(udpatedChallenge, _tableName);
     } catch (error) {
       throw (error);
     }
   }
 
-  static Future<void> deleteItem(String id, String authToken) async {
+  Future<void> deleteItem(String id, String authToken) async {
     try {
-      await server.HttpService.deleteItem(
-          id, _tableName, authToken, _tableName);
+      await _dbService.deleteItem(id, _tableName, _tableName);
     } catch (error) {
       throw (error);
     }

@@ -5,28 +5,31 @@ import 'package:http/http.dart' as http;
 
 import '../models/base-model.dart';
 import '../models/http_exception.dart';
+import './database_service.dart';
+import '../helpers/item_creator.dart';
 
-//Used as a paramater in the functions so the parent function (who
-//knows the variable type) can pass the constructor to the variable.
-//This is necessary because dart handles generics a bit
-//different and it's not possible to declare a new generic variable
-// by just using 'new T()'
-typedef S ItemCreator<S>(Map<String, dynamic> values);
+class HttpService implements DatabaseService {
+  String _userId;
+  String _authToken;
 
-class HttpService {
-  static Future<List<T>> fetch<T extends BaseModel>({
-    @required String tableName,
-    @required String authToken,
-    @required ItemCreator<T> creator,
-    bool filterByUser = false,
-    String userId = '',
-  }) async {
+  HttpService();
+
+  void update(String authToken, String userId) {
+    this._authToken = authToken;
+    this._userId = userId;
+  }
+
+  @override
+  Future<List<T>> fetch<T extends BaseModel>(
+      {@required String tableName,
+      @required ItemCreator<T> creator,
+      bool filterByUser = false}) async {
     try {
       final List<T> loadedItems = [];
       final filterString =
-          filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
+          filterByUser ? 'orderBy="creatorId"&equalTo="${this._userId}"' : '';
       final url =
-          'https://test-f0d3f.firebaseio.com/$tableName.json?auth=$authToken&$filterString';
+          'https://test-f0d3f.firebaseio.com/$tableName.json?auth=${this._authToken}&$filterString';
       final response = await http.get(url);
 
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -49,11 +52,12 @@ class HttpService {
     }
   }
 
-  static Future<T> addItem<T extends BaseModel>(T item, String tableName,
-      String authToken, ItemCreator<T> creator) async {
+  @override
+  Future<T> addItem<T extends BaseModel>(
+      T item, String tableName, ItemCreator<T> creator) async {
     try {
       final url =
-          'https://test-f0d3f.firebaseio.com/$tableName.json?auth=$authToken';
+          'https://test-f0d3f.firebaseio.com/$tableName.json?auth=${this._authToken}';
       final response = await http.post(url, body: json.encode(item.toJson()));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
@@ -70,11 +74,12 @@ class HttpService {
     }
   }
 
-  static Future<bool> updateItem<T extends BaseModel>(
-      T newItem, String tableName, String authToken) async {
+  @override
+  Future<bool> updateItem<T extends BaseModel>(
+      T newItem, String tableName) async {
     try {
       final url =
-          'https://test-f0d3f.firebaseio.com/$tableName/${newItem.id}}.json?auth=$authToken';
+          'https://test-f0d3f.firebaseio.com/$tableName/${newItem.id}}.json?auth=${this._authToken}';
       var response = await http.patch(url, body: json.encode(newItem.toJson()));
       if (response.statusCode >= 400)
         return false;
@@ -85,10 +90,10 @@ class HttpService {
     }
   }
 
-  static Future<void> deleteItem(
-      String id, String label, String authToken, String tableName) async {
+  @override
+  Future<void> deleteItem(String id, String label, String tableName) async {
     final url =
-        'https://test-f0d3f.firebaseio.com/$tableName/$id.json?auth=$authToken';
+        'https://test-f0d3f.firebaseio.com/$tableName/$id.json?auth=${this._authToken}';
     final response = await http.delete(url);
     if (response.statusCode >= 400) {
       throw HttpException('Could not delete product.');

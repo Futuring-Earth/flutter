@@ -1,13 +1,9 @@
-import 'dart:io' show Platform;
-
 import 'package:app/views/activity/activity_view.dart';
 import 'package:app/views/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-import './view_models/activity/activity_viewmodel.dart';
-import './view_models/challenges/challenge_viewmodel.dart';
 import './views/activity/activity_view.dart';
 import './views/tabs_view.dart';
 import './views/profile/profile_view.dart';
@@ -15,8 +11,10 @@ import './views/inspiration/inspiration_view.dart';
 import './views/challenges/challenges_view.dart';
 import './views/challenges/edit_challenge_view.dart';
 import 'services/auth_service.dart';
+import './provider_setup.dart';
 import 'views/auth_view.dart';
 import 'views/splash_view.dart';
+import './locator.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +22,7 @@ void main() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitUp,
   ]);
-
+  setupLocator();
   runApp(MyApp());
 }
 
@@ -32,42 +30,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider.value(
-          value: Auth(),
-        ),
-        ChangeNotifierProxyProvider<Auth, ChallengeViewModel>(
-          create: (ctx) => ChallengeViewModel(),
-          update: (ctx, auth, previousInstance) => previousInstance
-            ..update(
-              auth.token,
-              auth.userId,
-              previousInstance == null ? [] : previousInstance.challanges,
-            ),
-          // update: (ctx, auth, previuosItems) => ActivityViewModel(
-          //   auth.token,
-          //   auth.userId,
-          //   previuosItems == null ? [] : previuosItems.actions,
-          // ),
-        ),
-        ChangeNotifierProxyProvider<Auth, ActivityViewModel>(
-          create: (ctx) => ActivityViewModel(),
-          update: (ctx, auth, previuosItems) => previuosItems
-            ..update(
-              auth.token,
-              previuosItems == null ? [] : previuosItems.actions,
-            ),
-        ),
-        // ChangeNotifierProvider.value(
-        //   value: ActivityViewModel(),
-        // ),
-        // ChangeNotifierProvider.value(
-        //   value: ProfileViewModel(),
-        // ),
-        // ChangeNotifierProvider.value(
-        //   value: MarketViewModel(),
-        // ),
-      ],
+      providers: providers,
       child: Consumer<Auth>(
         builder: (ctx, auth, _) => MaterialApp(
           title: 'Futuring',

@@ -1,10 +1,14 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import '../../models/challenge.dart';
-import '../../services/challenge_graph_service.dart' as dbService;
+import '../../services/challenge_graph_service.dart';
 
 class ChallengeViewModel with ChangeNotifier {
   String _authToken;
+  final BuildContext ctx;
+  ChallengeGraphService dbService;
+
   // String _userId;
   List<Challenge> _challenges = [];
   List<Challenge> get challanges {
@@ -12,7 +16,9 @@ class ChallengeViewModel with ChangeNotifier {
   }
 
   // ChallengeViewModel({this.authToken, this.userId, this.challenges});
-  ChallengeViewModel();
+  ChallengeViewModel(this.ctx) {
+    dbService = new ChallengeGraphService(ctx);
+  }
 
   void update(String authToken, String userId, List<Challenge> challanges) {
     this._authToken = authToken;
@@ -28,8 +34,7 @@ class ChallengeViewModel with ChangeNotifier {
     try {
       _challenges.add(challenge);
       notifyListeners();
-      return dbService.ChallengeGraphService.addChallenge(
-          challenge, _authToken);
+      return dbService.addChallenge(challenge);
     } catch (error) {
       final addedItemIndex =
           _challenges.indexWhere((item) => item.id == challenge.id);
@@ -40,8 +45,7 @@ class ChallengeViewModel with ChangeNotifier {
   }
 
   Future<void> fetchAndSetChallenges([bool filterByUser = false]) async {
-    _challenges = await dbService.ChallengeGraphService.fetchChallenges(
-        filterByUser: filterByUser, authToken: _authToken);
+    _challenges = await dbService.fetchChallenges(filterByUser: filterByUser);
     notifyListeners();
   }
 
@@ -51,7 +55,7 @@ class ChallengeViewModel with ChangeNotifier {
     try {
       _challenges.removeAt(existingItemIndex);
       notifyListeners();
-      await dbService.ChallengeGraphService.deleteItem(id, _authToken);
+      await dbService.deleteItem(id, _authToken);
     } catch (error) {
       _challenges.insert(existingItemIndex, existingChallange);
       notifyListeners();
@@ -66,8 +70,7 @@ class ChallengeViewModel with ChangeNotifier {
     if (itemIndex >= 0) {
       _challenges[itemIndex] = udpatedChallenge;
       notifyListeners();
-      return dbService.ChallengeGraphService.updateChallenges(
-          udpatedChallenge, _authToken);
+      return dbService.updateChallenges(udpatedChallenge, _authToken);
     } else {
       return false;
     }

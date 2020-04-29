@@ -1,30 +1,34 @@
 import 'package:app/models/action.dart';
-import 'http_service.dart' as server;
+import 'database_service.dart';
 
 class ActionGraphService {
   static const tableName = 'actions';
-  static Future<List<Action>> fetchActions(String authToken) async {
+  DatabaseService _dbService;
+
+  ActionGraphService();
+
+  void update(DatabaseService dbService) {
+    this._dbService = dbService;
+  }
+
+  Future<List<Action>> fetchActions(String authToken) async {
     try {
-      return server.HttpService.fetch<Action>(
-          tableName: tableName,
-          authToken: authToken,
-          creator: (json) => new Action.fromJson(json));
+      return _dbService.fetch<Action>(
+          tableName: tableName, creator: (json) => new Action.fromJson(json));
     } catch (error) {
       throw (error);
     }
   }
 
-  static Future<bool> updateActions(
-      Action udpatedAction, String authToken) async {
+  Future<bool> updateActions(Action udpatedAction, String authToken) async {
     try {
-      return server.HttpService.updateItem<Action>(
-          udpatedAction, tableName, authToken);
+      return _dbService.updateItem<Action>(udpatedAction, tableName);
     } catch (error) {
       throw (error);
     }
   }
 
-  static Future<void> deleteItem(String id, String authToken) async {
-    await server.HttpService.deleteItem(id, tableName, authToken, tableName);
+  Future<void> deleteItem(String id, String authToken) async {
+    await _dbService.deleteItem(id, tableName, tableName);
   }
 }
