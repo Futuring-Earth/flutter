@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../view_models/challenges/challenge_viewmodel.dart';
+import '../../../core/view_models/challenges/challenge_viewmodel.dart';
 import './challange_item.dart';
 
 class ChallengesView extends StatelessWidget {

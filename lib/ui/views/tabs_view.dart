@@ -1,5 +1,5 @@
-import 'package:app/views/inspiration/inspiration_view.dart';
-import 'package:app/views/challenges/challenges_view.dart';
+import 'package:app/ui/views/inspiration/inspiration_view.dart';
+import 'package:app/ui/views/challenges/challenges_view.dart';
 import 'package:flutter/material.dart';
 
 import './activity/activity_view.dart';

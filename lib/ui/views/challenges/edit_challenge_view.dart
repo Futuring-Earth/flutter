@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:app/widgets/image_input.dart';
+import 'package:app/ui/widgets/image_input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/challenge.dart';
-import '../../view_models/challenges/challenge_viewmodel.dart';
+import '../../../core/models/challenge.dart';
+import '../../../core/view_models/challenges/challenge_viewmodel.dart';
 
 class EditChallengesView extends StatefulWidget {
   static const routeName = '/edit-challenge';

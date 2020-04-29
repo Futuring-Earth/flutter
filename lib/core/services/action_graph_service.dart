@@ -1,4 +1,4 @@
-import 'package:app/models/action.dart';
+import 'package:app/core/models/action.dart';
 import 'database_service.dart';
 
 class ActionGraphService {

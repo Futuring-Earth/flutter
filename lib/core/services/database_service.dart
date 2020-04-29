@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-import '../models/base-model.dart';
-import '../helpers/item_creator.dart';
+import 'package:app/core/models/base-model.dart';
+import 'package:app/helpers/item_creator.dart';
 
 abstract class DatabaseService {
   Future<List<T>> fetch<T extends BaseModel>(

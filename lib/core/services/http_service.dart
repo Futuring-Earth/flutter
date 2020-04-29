@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import '../models/base-model.dart';
 import '../models/http_exception.dart';
 import './database_service.dart';
-import '../helpers/item_creator.dart';
+import 'package:app/helpers/item_creator.dart';
 
 class HttpService implements DatabaseService {
   String _userId;

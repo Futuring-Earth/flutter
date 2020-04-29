@@ -1,9 +1,9 @@
 import 'package:provider/provider.dart';
 
-import './services/auth_service.dart';
-import './services/http_service.dart';
-import './view_models/activity/activity_viewmodel.dart';
-import './view_models/challenges/challenge_viewmodel.dart';
+import './core/services/auth_service.dart';
+import './core/services/http_service.dart';
+import './core/view_models/activity/activity_viewmodel.dart';
+import './core/view_models/challenges/challenge_viewmodel.dart';
 
 List<SingleChildCloneableWidget> providers = [
   ...independentServices,

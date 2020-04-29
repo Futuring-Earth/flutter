@@ -1,8 +1,8 @@
-import 'package:app/views/settings/settings_view.dart';
+import 'package:app/ui/views/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../services/auth_service.dart';
+import '../../../core/services/auth_service.dart';
 // import '../../helpers/custom_route.dart';
 
 class ProfileDrawer extends StatelessWidget {

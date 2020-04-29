@@ -1,6 +1,6 @@
-import '../locator.dart';
+import 'package:app/locator.dart';
 
-import 'package:app/models/challenge.dart';
+import 'package:app/core/models/challenge.dart';
 import 'database_service.dart';
 import './http_service.dart';
 
