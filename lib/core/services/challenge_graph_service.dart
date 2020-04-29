@@ -6,10 +6,9 @@ import './http_service.dart';
 
 class ChallengeGraphService {
   final _tableName = 'challenges';
-  final ctx;
   DatabaseService _dbService;
 
-  ChallengeGraphService(this.ctx) {
+  ChallengeGraphService() {
     _dbService = locator<HttpService>();
   }
 

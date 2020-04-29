@@ -17,7 +17,7 @@ class ChallengeViewModel with ChangeNotifier {
 
   // ChallengeViewModel({this.authToken, this.userId, this.challenges});
   ChallengeViewModel(this.ctx) {
-    dbService = new ChallengeGraphService(ctx);
+    dbService = new ChallengeGraphService();
   }
 
   void update(String authToken, String userId, List<Challenge> challanges) {
