@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Shared Karma</string>
+    <string name="facebook_app_id">220213342560847</string>
+    <string name="fb_login_protocol_scheme">fb220213342560847</string>
+</resources>

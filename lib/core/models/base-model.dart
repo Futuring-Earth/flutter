@@ -27,6 +27,8 @@ part 'basemodel.g.dart';
 //To automatically build the part classes
 // flutter pub run build_runner build (one time build)
 // flutter pub run build_runner watch (continuous build)
+//   when the build fail try adding '--delete-conflicting-outputs'
+//   at the end of the build command
 
 /// An annotation for the code generator to know that this class needs the
 /// JSON serialization logic to be generated.

@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import './ui/views/tabs_view.dart';
-import './core/services/auth_service.dart';
+import 'package:app/core/services/auth/http_auth_service.dart';
 import './provider_setup.dart';
 import './ui/views/auth_view.dart';
 import './ui/views/splash_view.dart';

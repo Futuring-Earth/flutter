@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/models/http_exception.dart';
-import '../../core/services/auth_service.dart';
+import 'package:app/core/services/auth/http_auth_service.dart';
 
 enum AuthMode { Signup, Login }
 

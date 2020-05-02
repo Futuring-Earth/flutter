@@ -1,6 +1,6 @@
 import 'package:provider/provider.dart';
 
-import './core/services/auth_service.dart';
+import 'package:app/core/services/auth/http_auth_service.dart';
 import './core/services/http_service.dart';
 import './core/view_models/activity/activity_viewmodel.dart';
 import './core/view_models/challenges/challenge_viewmodel.dart';
