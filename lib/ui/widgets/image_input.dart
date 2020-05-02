@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:provider/provider.dart';
 
+import 'package:app/core/services/image_picker_service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
@@ -17,11 +19,16 @@ class ImageInput extends StatefulWidget {
 class _ImageInputState extends State<ImageInput> {
   File _storedImage;
 
-  Future<void> _takePicture() async {
-    final imageFile = await ImagePicker.pickImage(
+  Future<void> _takePicture(BuildContext ctx) async {
+    final imageFile =
+        await Provider.of<ImagePickerService>(ctx, listen: false).pickImage(
       source: ImageSource.camera,
       maxWidth: 600,
     );
+    // final imageFile = await ImagePicker.pickImage(
+    //   source: ImageSource.camera,
+    //   maxWidth: 600,
+    // );
     if (imageFile == null) {
       return;
     }
@@ -64,7 +71,9 @@ class _ImageInputState extends State<ImageInput> {
             icon: Icon(Icons.camera),
             label: Text('Take Picture'),
             textColor: Theme.of(context).primaryColor,
-            onPressed: _takePicture,
+            onPressed: () async {
+              return await _takePicture(context);
+            },
           ),
         ),
       ],

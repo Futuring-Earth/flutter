@@ -18,11 +18,21 @@ class User extends BaseModel {
   @JsonKey(
       name: 'displayName', ignore: false, required: true, defaultValue: null)
   final String displayName;
+  @JsonKey(name: 'token', ignore: false, required: false, defaultValue: null)
+  final String token;
+  @JsonKey(name: 'userId', ignore: false, required: false, defaultValue: null)
+  final String userId;
+  @JsonKey(
+      name: 'expiration', ignore: false, required: false, defaultValue: null)
+  final DateTime expiration;
 
   User(
       {@required this.uid,
       @required this.photoUrl,
-      @required this.displayName});
+      @required this.displayName,
+      this.token,
+      this.userId,
+      this.expiration});
 
   @override
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

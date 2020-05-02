@@ -1,7 +1,12 @@
 import 'package:provider/provider.dart';
 
 import 'package:app/core/services/auth/http_auth_service.dart';
+import 'package:app/core/services/image_picker_service.dart';
+// import 'package:app/core/services/auth/auth_service_interface.dart';
+// import 'package:app/core/services/auth/firebase_auth_service.dart';
+
 import './core/services/http_service.dart';
+
 import './core/view_models/activity/activity_viewmodel.dart';
 import './core/view_models/challenges/challenge_viewmodel.dart';
 
@@ -14,7 +19,13 @@ List<SingleChildCloneableWidget> providers = [
 List<SingleChildCloneableWidget> independentServices = [
   ChangeNotifierProvider.value(
     value: Auth(),
-  )
+  ),
+  Provider<ImagePickerService>(
+    create: (_) => ImagePickerService(),
+  ),
+  // Provider<AuthServiceBase>.value(
+  //   value: FirebaseAuthService(),
+  // )
 ];
 
 List<SingleChildCloneableWidget> dependentServices = [

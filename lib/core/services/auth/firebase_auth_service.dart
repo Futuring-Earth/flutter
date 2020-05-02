@@ -5,23 +5,29 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:app/core/models/user.dart';
 
-class Auth implements AuthServiceBase {
+class FirebaseAuthService implements AuthServiceBase {
   final _firebaseAuth = FirebaseAuth.instance;
 
   User _userFromFirebase(FirebaseUser user) {
     if (user == null) {
       return null;
     }
+    // var token = await user.getIdToken();
     return User(
       uid: user.uid,
       displayName: user.displayName,
       photoUrl: user.photoUrl,
+      // token: token.token,
+      // expiration: token.expirationTime,
+      userId: user.uid,
     );
   }
 
   @override
   Stream<User> get onAuthStateChanged {
-    return _firebaseAuth.onAuthStateChanged.map(_userFromFirebase);
+    return _firebaseAuth.onAuthStateChanged.map((fUser) {
+      return _userFromFirebase(fUser);
+    });
   }
 
   @override
