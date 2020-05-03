@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
             context,
             child: AuthWidget(userSnapshot: userSnapshot),
           ),
+          routes: FuturingSettings.getGlobalRoutes(context),
         );
       }),
 
