@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 
 import 'package:app/core/services/auth/http_auth_service.dart';
@@ -10,59 +11,101 @@ import './core/services/http_service.dart';
 import './core/view_models/activity/activity_viewmodel.dart';
 import './core/view_models/challenges/challenge_viewmodel.dart';
 
-List<SingleChildCloneableWidget> providers = [
-  ...independentServices,
-  ...dependentServices,
-  ...uiConsumableProviders
-];
+import 'package:app/core/services/auth/apple_sign_in_available.dart';
+import 'package:app/core/services/auth/auth_service.dart';
+import 'package:app/core/services/auth/auth_service_adapter.dart';
+import 'package:app/core/services/auth/firebase_email_link_handler.dart';
+import 'package:app/core/services/auth/email_secure_store.dart';
 
-List<SingleChildCloneableWidget> independentServices = [
-  ChangeNotifierProvider.value(
-    value: Auth(),
-  ),
-  Provider<ImagePickerService>(
-    create: (_) => ImagePickerService(),
-  ),
-  // Provider<AuthServiceBase>.value(
-  //   value: FirebaseAuthService(),
-  // )
-];
+class InitialProviderSetup {
+  InitialProviderSetup(
+      {this.initialAuthServiceType = AuthServiceType.firebase,
+      this.appleSignInAvailable});
+  final AuthServiceType initialAuthServiceType;
+  final AppleSignInAvailable appleSignInAvailable;
 
-List<SingleChildCloneableWidget> dependentServices = [
-  ChangeNotifierProxyProvider<Auth, ChallengeViewModel>(
-    create: (ctx) => ChallengeViewModel(ctx),
-    update: (ctx, auth, previousInstance) => previousInstance
-      ..update(
-        auth.token,
-        auth.userId,
-        previousInstance == null ? [] : previousInstance.challanges,
-      ),
-    // update: (ctx, auth, previuosInstance) => ActivityViewModel(
-    //   auth.token,
-    //   auth.userId,
-    //   previuosInstance == null ? [] : previuosInstance.actions,
-    // ),
-  ),
-  ChangeNotifierProxyProvider<Auth, ActivityViewModel>(
-    create: (ctx) => ActivityViewModel(),
-    update: (ctx, auth, previuosInstance) => previuosInstance
-      ..update(
-        auth.token,
-        previuosInstance == null ? [] : previuosInstance.actions,
-      ),
-  ),
-  ProxyProvider<Auth, HttpService>(
-    create: (ctx) => HttpService(),
-    update: (ctx, auth, previuosInstance) => previuosInstance
-      ..update(
-        auth.token,
-        auth.userId,
-      ),
-  ),
-];
+  List<SingleChildCloneableWidget> get providers {
+    return [
+      ...independentServices,
+      ...dependentServices,
+      ...uiConsumableProviders
+    ];
+  }
 
-List<SingleChildCloneableWidget> uiConsumableProviders = [
-  // StreamProvider<User>(
-  //   builder: (context) => Provider.of<AuthenticationService>(context, listen: false).user,
-  // )
-];
+  List<SingleChildCloneableWidget> get independentServices {
+    return [
+      ChangeNotifierProvider.value(
+        value: Auth(),
+      ),
+      Provider<ImagePickerService>(
+        create: (_) => ImagePickerService(),
+      ),
+      Provider<AppleSignInAvailable>.value(value: appleSignInAvailable),
+      Provider<AuthService>(
+        create: (_) => AuthServiceAdapter(
+          initialAuthServiceType: initialAuthServiceType,
+        ),
+        dispose: (_, AuthService authService) => authService.dispose(),
+      ),
+      Provider<EmailSecureStore>(
+        create: (_) => EmailSecureStore(
+          flutterSecureStorage: FlutterSecureStorage(),
+        ),
+      ),
+      // Provider<AuthServiceBase>.value(
+      //   value: FirebaseAuthService(),
+      // )
+    ];
+  }
+
+  List<SingleChildCloneableWidget> get dependentServices {
+    return [
+      ChangeNotifierProxyProvider<Auth, ChallengeViewModel>(
+        create: (ctx) => ChallengeViewModel(ctx),
+        update: (ctx, auth, previousInstance) => previousInstance
+          ..update(
+            auth.token,
+            auth.userId,
+            previousInstance == null ? [] : previousInstance.challanges,
+          ),
+        // update: (ctx, auth, previuosInstance) => ActivityViewModel(
+        //   auth.token,
+        //   auth.userId,
+        //   previuosInstance == null ? [] : previuosInstance.actions,
+        // ),
+      ),
+      ChangeNotifierProxyProvider<Auth, ActivityViewModel>(
+        create: (ctx) => ActivityViewModel(),
+        update: (ctx, auth, previuosInstance) => previuosInstance
+          ..update(
+            auth.token,
+            previuosInstance == null ? [] : previuosInstance.actions,
+          ),
+      ),
+      ProxyProvider<Auth, HttpService>(
+        create: (ctx) => HttpService(),
+        update: (ctx, auth, previuosInstance) => previuosInstance
+          ..update(
+            auth.token,
+            auth.userId,
+          ),
+      ),
+      ProxyProvider2<AuthService, EmailSecureStore, FirebaseEmailLinkHandler>(
+        update: (_, AuthService authService, EmailSecureStore storage, __) =>
+            FirebaseEmailLinkHandler.createAndConfigure(
+          auth: authService,
+          userCredentialsStorage: storage,
+        ),
+        dispose: (_, linkHandler) => linkHandler.dispose(),
+      ),
+    ];
+  }
+
+  List<SingleChildCloneableWidget> get uiConsumableProviders {
+    return [
+      // StreamProvider<User>(
+      //   builder: (context) => Provider.of<AuthenticationService>(context, listen: false).user,
+      // )
+    ];
+  }
+}

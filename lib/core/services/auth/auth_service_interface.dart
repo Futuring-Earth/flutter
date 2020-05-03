@@ -1,6 +1,7 @@
 import 'package:app/core/models/user.dart';
+import 'package:flutter/foundation.dart';
 
-abstract class AuthServiceBase {
+abstract class AuthServiceBase with ChangeNotifier {
   Stream<User> get onAuthStateChanged;
   Future<User> currentUser();
   Future<User> signInAnonymously();
