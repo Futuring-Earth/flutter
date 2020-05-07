@@ -18,6 +18,7 @@ class User extends BaseModel {
     this.email,
     this.photoUrl,
     this.displayName,
+    this.aboutMe
   }) : super(id: uid, label: 'User');
 
   @JsonKey(name: 'uid', ignore: false, required: true, defaultValue: null)
@@ -28,6 +29,8 @@ class User extends BaseModel {
   final String photoUrl;
   @JsonKey(name: 'displayName', ignore: false, required: true, defaultValue: null)
   final String displayName;
+  @JsonKey(name: 'aboutMe', ignore: false, required: true, defaultValue: null)
+  final String aboutMe;
 
    @override
   factory User.fromJson(Map<String, dynamic> json) =>
