@@ -8,7 +8,6 @@ part of 'challenge.dart';
 
 Challenge _$ChallengeFromJson(Map<String, dynamic> json) {
   $checkKeys(json, requiredKeys: const [
-    'label',
     'title',
     'description',
     'minTeamSize',
@@ -27,11 +26,10 @@ Challenge _$ChallengeFromJson(Map<String, dynamic> json) {
     co2Impact: (json['co2Impact'] as num)?.toDouble(),
     overallRaiting: (json['overallRaiting'] as num)?.toDouble(),
     id: json['id'] as String,
-  )..label = json['label'] as String;
+  );
 }
 
 Map<String, dynamic> _$ChallengeToJson(Challenge instance) => <String, dynamic>{
-      'label': instance.label,
       'title': instance.title,
       'description': instance.description,
       'imageUrl': instance.imageUrl,

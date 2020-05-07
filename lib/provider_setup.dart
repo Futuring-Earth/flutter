@@ -52,9 +52,13 @@ class InitialProviderSetup {
           flutterSecureStorage: FlutterSecureStorage(),
         ),
       ),
-      // Provider<AuthServiceBase>.value(
-      //   value: FirebaseAuthService(),
-      // )
+      // Provider<UserHandler>(
+      //   create: (ctx) {
+      //     User user;
+      //     Provider.of<AuthService>(ctx, listen: true).onAuthStateChanged.first.then((value) => user = value);
+      //     return UserHandler.create(currentUser: user);
+      //   },
+      // ),
     ];
   }
 
@@ -98,6 +102,13 @@ class InitialProviderSetup {
         ),
         dispose: (_, linkHandler) => linkHandler.dispose(),
       ),
+      // ProxyProvider<AuthService, UserHandler>(
+      //   update: (ctx, auth, previuosInstance) { User currentUser2;
+      //    auth.currentUser().then((value) => currentUser2 = value);
+      //    return UserHandler
+      //             .create(currentUser: currentUser2);
+      //   },
+      // ),
     ];
   }
 

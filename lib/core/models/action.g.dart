@@ -7,18 +7,16 @@ part of 'action.dart';
 // **************************************************************************
 
 Action _$ActionFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, requiredKeys: const ['id', 'label', 'title', 'description']);
+  $checkKeys(json, requiredKeys: const ['title', 'description', 'id']);
   return Action(
     title: json['title'] as String,
     description: json['description'] as String,
-  )
-    ..id = json['id'] as String
-    ..label = json['label'] as String;
+    id: json['id'] as String,
+  );
 }
 
 Map<String, dynamic> _$ActionToJson(Action instance) => <String, dynamic>{
-      'id': instance.id,
-      'label': instance.label,
       'title': instance.title,
       'description': instance.description,
+      'id': instance.id,
     };

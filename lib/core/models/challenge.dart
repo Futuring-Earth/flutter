@@ -33,29 +33,30 @@ part 'challenge.g.dart';
 @JsonSerializable(explicitToJson: true)
 class Challenge extends BaseModel {
   @JsonKey(name: 'title', ignore: false, required: true, defaultValue: null)
-  String title;
+  final String title;
   @JsonKey(
       name: 'description', ignore: false, required: true, defaultValue: null)
-  String description;
+  final String description;
   @JsonKey(name: 'imageUrl', ignore: false, required: false, defaultValue: null)
-  String imageUrl;
+  final String imageUrl;
   @JsonKey(name: 'duration', ignore: false, required: false, defaultValue: null)
-  int duration;
+  final int duration;
   @JsonKey(
       name: 'minTeamSize', ignore: false, required: true, defaultValue: null)
-  int minTeamSize;
+  final int minTeamSize;
   @JsonKey(
       name: 'maxTeamSize', ignore: false, required: true, defaultValue: null)
-  int maxTeamSize;
+  final int maxTeamSize;
   @JsonKey(name: 'co2Impact', ignore: false, required: true, defaultValue: null)
-  double co2Impact;
+  final double co2Impact;
   @JsonKey(
       name: 'overallRaiting', ignore: false, required: true, defaultValue: null)
-  double overallRaiting;
-  @override
-  String id;
+  final double overallRaiting;
+  @JsonKey(
+      name: 'id', ignore: false, required: true, defaultValue: null)
+  final String id;
 
-  Challenge(
+  const Challenge(
       {@required this.title,
       @required this.description,
       this.imageUrl,
@@ -64,12 +65,12 @@ class Challenge extends BaseModel {
       @required this.maxTeamSize,
       @required this.co2Impact,
       this.overallRaiting,
-      this.id});
+      this.id}) : super(id: id, label: 'Challenge');
 
-  Challenge.copy(Challenge newModel) : super.copy(newModel) {
-    title = newModel.title;
-    description = newModel.description;
-  }
+  // Challenge.copy(Challenge newModel) : super.copy(newModel) {
+  //   title = newModel.title;
+  //   description = newModel.description;
+  // }
 
   @override
   factory Challenge.fromJson(Map<String, dynamic> json) =>

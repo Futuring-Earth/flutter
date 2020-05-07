@@ -4,7 +4,10 @@ class Constants {
 }
 
 class APIPath {
-  static String challenge(String uid, String jobId) =>
-      'users/$uid/challenges/$jobId';
+  static String challenge(String uid, String objectId) =>
+      'users/$uid/challenges/$objectId';
   static String challenges(String uid) => 'users/$uid/challenges';
+  static String user(String uid) =>
+      'users/$uid';
+  static String users() => 'users';
 }

@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "773966530810-hek4abqpaef5f4v2amstenv0icadgaei.apps.googleusercontent.com",
+          "client_id": "773966530810-9cm2qlip4ks5v6b8mf0p9vu6a2m7l942.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "earth.futuring.app",
-            "certificate_hash": "0df135220126a2013c45dcf3c10e555f44e79627"
+            "certificate_hash": "355a5fc7682d79f763896ccd5a5d7efba00f2c7a"
           }
         },
         {
@@ -38,6 +38,13 @@
             {
               "client_id": "773966530810-54p3cnfuhtf0ta74lhgeg02kra3dg3jp.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "773966530810-us60cs6mt1rkj64cf1ovaurhgapflcho.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "earth.futuring.app"
+              }
             }
           ]
         }

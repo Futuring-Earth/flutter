@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app/core/models/user.dart';
+import 'package:app/core/services/user_handler.dart';
 import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:app/core/services/auth/auth_service.dart';
 import 'package:app/core/services/auth/firebase_auth_service.dart';
@@ -35,6 +36,7 @@ class AuthServiceAdapter implements AuthService {
         _firebaseAuthService.onAuthStateChanged.listen((User user) {
       if (authServiceType == AuthServiceType.firebase) {
         _onAuthStateChangedController.add(user);
+        UserHandler.create(currentUser: user);
       }
     }, onError: (dynamic error) {
       if (authServiceType == AuthServiceType.firebase) {

@@ -33,17 +33,20 @@ part 'action.g.dart';
 @JsonSerializable(explicitToJson: true)
 class Action extends BaseModel {
   @JsonKey(name: 'title', ignore: false, required: true, defaultValue: null)
-  String title;
+  final String title;
   @JsonKey(
       name: 'description', ignore: false, required: true, defaultValue: null)
-  String description;
+  final String description;
+  @JsonKey(
+      name: 'id', ignore: false, required: true, defaultValue: null)
+  final String id;
 
-  Action({@required this.title, @required this.description});
+  const Action({@required this.title, @required this.description, @required this.id}) : super(id: id, label: 'Action');
 
-  Action.copy(Action newModel) : super.copy(newModel) {
-    title = newModel.title;
-    description = newModel.description;
-  }
+  // Action.copy(Action newModel) : super.copy(newModel) {
+  //   title = newModel.title;
+  //   description = newModel.description;
+  // }
 
   @override
   factory Action.fromJson(Map<String, dynamic> json) => _$ActionFromJson(json);

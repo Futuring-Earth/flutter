@@ -35,16 +35,16 @@ part 'basemodel.g.dart';
 @JsonSerializable()
 class BaseModel {
   @JsonKey(name: 'id', ignore: false, required: true, defaultValue: null)
-  String id;
+  final String id;
   @JsonKey(name: 'label', ignore: false, required: true, defaultValue: null)
-  String label;
+  final String label;
 
-  BaseModel({this.id, this.label});
+  const BaseModel({this.id, this.label});
 
-  BaseModel.copy(BaseModel newModel) {
-    id = newModel.id;
-    label = newModel.label;
-  }
+  // BaseModel.copy(BaseModel newModel) {
+  //   id = newModel.id;
+  //   label = newModel.label;
+  // }
 
   factory BaseModel.fromJson(Map<String, dynamic> json) =>
       _$BaseModelFromJson(json);

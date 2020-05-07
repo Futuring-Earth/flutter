@@ -1,0 +1,1053 @@
+@startuml
+set namespaceSeparator ::
+
+class "app::constants::global_settings.dart::Constants" {
+  {static} +String firebaseProjectURL
+}
+
+class "app::constants::global_settings.dart::APIPath" {
+  {static} +String challenge()
+  {static} +String challenges()
+}
+
+class "app::constants::keys.dart::Keys" {
+  {static} +String anonymous
+  {static} +String logout
+  {static} +String alertDefault
+  {static} +String alertCancel
+}
+
+class "app::constants::strings.dart::Strings" {
+  {static} +String ok
+  {static} +String cancel
+  {static} +String logout
+  {static} +String logoutAreYouSure
+  {static} +String logoutFailed
+  {static} +String signIn
+  {static} +String signInWithEmailPassword
+  {static} +String signInWithEmailLink
+  {static} +String signInWithFacebook
+  {static} +String signInWithGoogle
+  {static} +String goAnonymous
+  {static} +String or
+  {static} +String register
+  {static} +String forgotPassword
+  {static} +String forgotPasswordQuestion
+  {static} +String createAnAccount
+  {static} +String needAnAccount
+  {static} +String haveAnAccount
+  {static} +String signInFailed
+  {static} +String registrationFailed
+  {static} +String passwordResetFailed
+  {static} +String sendResetLink
+  {static} +String backToSignIn
+  {static} +String resetLinkSentTitle
+  {static} +String resetLinkSentMessage
+  {static} +String emailLabel
+  {static} +String emailHint
+  {static} +String password8CharactersLabel
+  {static} +String passwordLabel
+  {static} +String invalidEmailErrorText
+  {static} +String invalidEmailEmpty
+  {static} +String invalidPasswordTooShort
+  {static} +String invalidPasswordEmpty
+  {static} +String submitEmailAddressLink
+  {static} +String checkYourEmail
+  {static} +String errorSendingEmail
+  {static} +String sendActivationLink
+  {static} +String activationLinkError
+  {static} +String submitEmailAgain
+  {static} +String userAlreadySignedIn
+  {static} +String isNotSignInWithEmailLinkMessage
+  {static} +String homePage
+  {static} +String profilePage
+  {static} +String developerMenu
+  {static} +String authenticationType
+  {static} +String firebase
+  {static} +String mock
+  {static} +String activationLinkSent()
+}
+
+class "app::core::models::action.dart::Action" {
+  +String title
+  +String description
+  +Map toJson()
+}
+
+"app::core::models::base-model.dart::BaseModel" <|-- "app::core::models::action.dart::Action"
+
+class "app::core::models::base-model.dart::BaseModel" {
+  +String id
+  +String label
+  +Map toJson()
+  +BaseModel fromJson()
+}
+
+class "app::core::models::challenge.dart::Challenge" {
+  +String title
+  +String description
+  +String imageUrl
+  +int duration
+  +int minTeamSize
+  +int maxTeamSize
+  +double co2Impact
+  +double overallRaiting
+  +String id
+  +Map toJson()
+}
+
+"app::core::models::base-model.dart::BaseModel" <|-- "app::core::models::challenge.dart::Challenge"
+
+class "app::core::models::http_exception.dart::HttpException" {
+  +String message
+  +String toString()
+}
+
+"dart::core::Exception" <|-- "app::core::models::http_exception.dart::HttpException"
+
+class "app::core::models::user.dart::User" {
+  +String uid
+  +String email
+  +String photoUrl
+  +String displayName
+}
+
+class "app::core::services::action_graph_service.dart::ActionGraphService" {
+  {static} +String tableName
+  -DatabaseService _dbService
+  +void update()
+  +Future fetchActions()
+  +Future updateActions()
+  +Future deleteItem()
+}
+
+"app::core::services::action_graph_service.dart::ActionGraphService" o-- "app::core::services::database_service.dart::DatabaseService"
+
+class "app::core::services::auth::apple_sign_in_available.dart::AppleSignInAvailable" {
+  +bool isAvailable
+  {static} +Future check()
+}
+
+abstract class "app::core::services::auth::auth_service.dart::AuthService" {
+  +Stream<User> onAuthStateChanged
+  +Future currentUser()
+  +Future signInAnonymously()
+  +Future signInWithEmailAndPassword()
+  +Future createUserWithEmailAndPassword()
+  +Future sendPasswordResetEmail()
+  +Future signInWithEmailAndLink()
+  +Future isSignInWithEmailLink()
+  +Future sendSignInWithEmailLink()
+  +Future signInWithGoogle()
+  +Future signInWithFacebook()
+  +Future signInWithApple()
+  +Future signOut()
+  +void dispose()
+}
+
+"app::core::services::auth::auth_service.dart::AuthService" o-- "dart::async::Stream<User>"
+
+class "app::core::services::auth::auth_service_adapter.dart::AuthServiceType" {
+  +int index
+  {static} +List<AuthServiceType> values
+  {static} +AuthServiceType firebase
+  {static} +AuthServiceType mock
+}
+
+"app::core::services::auth::auth_service_adapter.dart::AuthServiceType" o-- "app::core::services::auth::auth_service_adapter.dart::AuthServiceType"
+
+class "app::core::services::auth::auth_service_adapter.dart::AuthServiceAdapter" {
+  -FirebaseAuthService _firebaseAuthService
+  -MockAuthService _mockAuthService
+  +ValueNotifier<AuthServiceType> authServiceTypeNotifier
+  -StreamSubscription<User> _firebaseAuthSubscription
+  -StreamSubscription<User> _mockAuthSubscription
+  -StreamController<User> _onAuthStateChangedController
+  +AuthServiceType authServiceType
+  +AuthService authService
+  +Stream<User> onAuthStateChanged
+  -void _setup()
+  +void dispose()
+  +Future currentUser()
+  +Future signInAnonymously()
+  +Future createUserWithEmailAndPassword()
+  +Future signInWithEmailAndPassword()
+  +Future sendPasswordResetEmail()
+  +Future signInWithEmailAndLink()
+  +Future isSignInWithEmailLink()
+  +Future sendSignInWithEmailLink()
+  +Future signInWithFacebook()
+  +Future signInWithGoogle()
+  +Future signInWithApple()
+  +Future signOut()
+}
+
+"app::core::services::auth::auth_service_adapter.dart::AuthServiceAdapter" o-- "app::core::services::auth::firebase_auth_service.dart::FirebaseAuthService"
+"app::core::services::auth::auth_service_adapter.dart::AuthServiceAdapter" o-- "app::core::services::auth::mock_auth_service.dart::MockAuthService"
+"app::core::services::auth::auth_service_adapter.dart::AuthServiceAdapter" o-- "flutter::src::foundation::change_notifier.dart::ValueNotifier<AuthServiceType>"
+"app::core::services::auth::auth_service_adapter.dart::AuthServiceAdapter" o-- "dart::async::StreamSubscription<User>"
+"app::core::services::auth::auth_service_adapter.dart::AuthServiceAdapter" o-- "dart::async::StreamController<User>"
+"app::core::services::auth::auth_service_adapter.dart::AuthServiceAdapter" o-- "app::core::services::auth::auth_service_adapter.dart::AuthServiceType"
+"app::core::services::auth::auth_service_adapter.dart::AuthServiceAdapter" o-- "app::core::services::auth::auth_service.dart::AuthService"
+"app::core::services::auth::auth_service_adapter.dart::AuthServiceAdapter" o-- "dart::async::Stream<User>"
+"app::core::services::auth::auth_service.dart::AuthService" <|-- "app::core::services::auth::auth_service_adapter.dart::AuthServiceAdapter"
+
+abstract class "app::core::services::auth::auth_service_interface.dart::AuthServiceBase" {
+  +Stream<User> onAuthStateChanged
+  +Future currentUser()
+  +Future signInAnonymously()
+  +Future signInWithEmailAndPassword()
+  +Future createUserWithEmailAndPassword()
+  +Future signInWithGoogle()
+  +Future signInWithFacebook()
+  +Future signOut()
+}
+
+"app::core::services::auth::auth_service_interface.dart::AuthServiceBase" o-- "dart::async::Stream<User>"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "app::core::services::auth::auth_service_interface.dart::AuthServiceBase"
+
+class "app::core::services::auth::email_secure_store.dart::EmailSecureStore" {
+  +FlutterSecureStorage flutterSecureStorage
+  {static} +String storageUserEmailAddressKey
+  +Future setEmail()
+  +Future clearEmail()
+  +Future getEmail()
+}
+
+"app::core::services::auth::email_secure_store.dart::EmailSecureStore" o-- "flutter_secure_storage::flutter_secure_storage.dart::FlutterSecureStorage"
+
+class "app::core::services::auth::firebase_auth_service.dart::FirebaseAuthService" {
+  -FirebaseAuth _firebaseAuth
+  +Stream<User> onAuthStateChanged
+  -User _userFromFirebase()
+  +Future signInAnonymously()
+  +Future signInWithEmailAndPassword()
+  +Future createUserWithEmailAndPassword()
+  +Future sendPasswordResetEmail()
+  +Future signInWithEmailAndLink()
+  +Future isSignInWithEmailLink()
+  +Future sendSignInWithEmailLink()
+  +Future signInWithGoogle()
+  +Future signInWithFacebook()
+  +Future signInWithApple()
+  +Future currentUser()
+  +Future signOut()
+  +void dispose()
+}
+
+"app::core::services::auth::firebase_auth_service.dart::FirebaseAuthService" o-- "firebase_auth::firebase_auth.dart::FirebaseAuth"
+"app::core::services::auth::firebase_auth_service.dart::FirebaseAuthService" o-- "dart::async::Stream<User>"
+"app::core::services::auth::auth_service.dart::AuthService" <|-- "app::core::services::auth::firebase_auth_service.dart::FirebaseAuthService"
+
+class "app::core::services::auth::firebase_email_link_handler.dart::EmailLinkErrorType" {
+  +int index
+  {static} +List<EmailLinkErrorType> values
+  {static} +EmailLinkErrorType linkError
+  {static} +EmailLinkErrorType isNotSignInWithEmailLink
+  {static} +EmailLinkErrorType emailNotSet
+  {static} +EmailLinkErrorType signInFailed
+  {static} +EmailLinkErrorType userAlreadySignedIn
+}
+
+"app::core::services::auth::firebase_email_link_handler.dart::EmailLinkErrorType" o-- "app::core::services::auth::firebase_email_link_handler.dart::EmailLinkErrorType"
+
+class "app::core::services::auth::firebase_email_link_handler.dart::EmailLinkError" {
+  +EmailLinkErrorType error
+  +String description
+  -Map<EmailLinkErrorType, String> _messages
+  +String message
+  +int hashCode
+  +String toString()
+  +bool ==()
+}
+
+"app::core::services::auth::firebase_email_link_handler.dart::EmailLinkError" o-- "app::core::services::auth::firebase_email_link_handler.dart::EmailLinkErrorType"
+
+class "app::core::services::auth::firebase_email_link_handler.dart::FirebaseEmailLinkHandler" {
+  +AuthService auth
+  +WidgetsBinding widgetsBinding
+  +EmailSecureStore emailStore
+  -PublishSubject<EmailLinkError> _errorController
+  +ValueNotifier<bool> isLoading
+  -Uri _lastUnprocessedLink
+  -PlatformException _lastUnprocessedLinkError
+  +dynamic errorStream
+  {static} +FirebaseEmailLinkHandler createAndConfigure()
+  +Future getEmail()
+  +Future handleLink()
+  +Future handleLinkError()
+  +void dispose()
+  +void didChangeAppLifecycleState()
+  -Future _checkUnprocessedLinks()
+  -Future _processDynamicLink()
+  -Future _signInWithEmail()
+  +Future sendSignInWithEmailLink()
+}
+
+"app::core::services::auth::firebase_email_link_handler.dart::FirebaseEmailLinkHandler" o-- "app::core::services::auth::auth_service.dart::AuthService"
+"app::core::services::auth::firebase_email_link_handler.dart::FirebaseEmailLinkHandler" o-- "flutter::src::widgets::binding.dart::WidgetsBinding"
+"app::core::services::auth::firebase_email_link_handler.dart::FirebaseEmailLinkHandler" o-- "app::core::services::auth::email_secure_store.dart::EmailSecureStore"
+"app::core::services::auth::firebase_email_link_handler.dart::FirebaseEmailLinkHandler" o-- "rxdart::src::subjects::publish_subject.dart::PublishSubject<EmailLinkError>"
+"app::core::services::auth::firebase_email_link_handler.dart::FirebaseEmailLinkHandler" o-- "flutter::src::foundation::change_notifier.dart::ValueNotifier<bool>"
+"app::core::services::auth::firebase_email_link_handler.dart::FirebaseEmailLinkHandler" o-- "flutter::src::services::message_codec.dart::PlatformException"
+"flutter::src::widgets::binding.dart::WidgetsBindingObserver" <|-- "app::core::services::auth::firebase_email_link_handler.dart::FirebaseEmailLinkHandler"
+
+class "app::core::services::auth::http_auth_service.dart::Auth" {
+  -String _token
+  -DateTime _expiryDate
+  -String _userId
+  -Timer _authTimer
+  +bool isAuth
+  +String token
+  +String userId
+  -Future _authenticate()
+  +Future signup()
+  +Future login()
+  +Future tryAutoLogin()
+  +Future logout()
+  -void _autoLogout()
+}
+
+"app::core::services::auth::http_auth_service.dart::Auth" o-- "dart::async::Timer"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "app::core::services::auth::http_auth_service.dart::Auth"
+
+class "app::core::services::auth::mock_auth_service.dart::MockAuthService" {
+  +Duration startupTime
+  +Duration responseTime
+  -Map<String, _UserData> _usersStore
+  -User _currentUser
+  -StreamController<User> _onAuthStateChangedController
+  +Stream<User> onAuthStateChanged
+  +Future currentUser()
+  +Future createUserWithEmailAndPassword()
+  +Future signInWithEmailAndPassword()
+  +Future sendPasswordResetEmail()
+  +Future signInWithEmailAndLink()
+  +Future isSignInWithEmailLink()
+  +Future sendSignInWithEmailLink()
+  +Future signOut()
+  -void _add()
+  +Future signInAnonymously()
+  +Future signInWithFacebook()
+  +Future signInWithGoogle()
+  +Future signInWithApple()
+  +void dispose()
+}
+
+"app::core::services::auth::mock_auth_service.dart::MockAuthService" o-- "app::core::models::user.dart::User"
+"app::core::services::auth::mock_auth_service.dart::MockAuthService" o-- "dart::async::StreamController<User>"
+"app::core::services::auth::mock_auth_service.dart::MockAuthService" o-- "dart::async::Stream<User>"
+"app::core::services::auth::auth_service.dart::AuthService" <|-- "app::core::services::auth::mock_auth_service.dart::MockAuthService"
+
+class "app::core::services::auth::mock_auth_service.dart::_UserData" {
+  +String password
+  +User user
+}
+
+"app::core::services::auth::mock_auth_service.dart::_UserData" o-- "app::core::models::user.dart::User"
+
+abstract class "app::core::services::ChallengeDBService.dart::ChallengeDBService" {
+  +Future setChallenge()
+  +Future deleteChallenge()
+  +Stream challengesStream()
+  +Stream challengeStream()
+}
+
+class "app::core::services::ChallengeDBService.dart::FirestoreChallengeDBService" {
+  +String uid
+  -FirestoreService _service
+  +Future setChallenge()
+  +Future deleteChallenge()
+  +Stream challengeStream()
+  +Stream challengesStream()
+}
+
+"app::core::services::ChallengeDBService.dart::FirestoreChallengeDBService" o-- "app::core::services::firestore_service.dart::FirestoreService"
+"app::core::services::ChallengeDBService.dart::ChallengeDBService" <|-- "app::core::services::ChallengeDBService.dart::FirestoreChallengeDBService"
+
+class "app::core::services::challenge_graph_service.dart::ChallengeGraphService" {
+  -String _tableName
+  -DatabaseService _dbService
+  +void update()
+  +Future fetchChallenges()
+  +Future addChallenge()
+  +Future updateChallenges()
+  +Future deleteItem()
+}
+
+"app::core::services::challenge_graph_service.dart::ChallengeGraphService" o-- "app::core::services::database_service.dart::DatabaseService"
+
+abstract class "app::core::services::database_service.dart::DatabaseService" {
+  +Future fetch()
+  +Future addItem()
+  +Future updateItem()
+  +Future deleteItem()
+}
+
+class "app::core::services::firestore_service.dart::FirestoreService" {
+  {static} +FirestoreService instance
+  +Future setData()
+  +Future deleteData()
+  +Stream collectionStream()
+  +Stream documentStream()
+}
+
+"app::core::services::firestore_service.dart::FirestoreService" o-- "app::core::services::firestore_service.dart::FirestoreService"
+
+class "app::core::services::http_service.dart::HttpService" {
+  -String _userId
+  -String _authToken
+  +void update()
+  +Future fetch()
+  +Future addItem()
+  +Future updateItem()
+  +Future deleteItem()
+}
+
+"app::core::services::database_service.dart::DatabaseService" <|-- "app::core::services::http_service.dart::HttpService"
+
+class "app::core::services::image_picker_service.dart::ImagePickerService" {
+  +Future pickImage()
+}
+
+class "app::core::services::navigation_service.dart::NavigationService" {
+  +GlobalKey<NavigatorState> navigatorKey
+  +Future navigateTo()
+  +void goBack()
+}
+
+"app::core::services::navigation_service.dart::NavigationService" o-- "flutter::src::widgets::framework.dart::GlobalKey<NavigatorState>"
+
+class "app::core::view_models::activity::activity_viewmodel.dart::ActivityViewModel" {
+  -List<Action> _actions
+  +List<Action> actions
+  +void update()
+}
+
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "app::core::view_models::activity::activity_viewmodel.dart::ActivityViewModel"
+
+class "app::core::view_models::challenges::challenge_viewmodel.dart::ChallengeViewModel" {
+  -String _authToken
+  +BuildContext ctx
+  +ChallengeGraphService dbService
+  -List<Challenge> _challenges
+  +List<Challenge> challanges
+  +void update()
+  +Challenge findById()
+  +Future addChallenge()
+  +Future fetchAndSetChallenges()
+  +Future deleteChallenge()
+  +Future updateChallenge()
+}
+
+"app::core::view_models::challenges::challenge_viewmodel.dart::ChallengeViewModel" o-- "flutter::src::widgets::framework.dart::BuildContext"
+"app::core::view_models::challenges::challenge_viewmodel.dart::ChallengeViewModel" o-- "app::core::services::challenge_graph_service.dart::ChallengeGraphService"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "app::core::view_models::challenges::challenge_viewmodel.dart::ChallengeViewModel"
+
+class "app::main.dart::MyApp" {
+  +AuthServiceType initialAuthServiceType
+  +AppleSignInAvailable appleSignInAvailable
+  +Widget build()
+}
+
+"app::main.dart::MyApp" o-- "app::core::services::auth::auth_service_adapter.dart::AuthServiceType"
+"app::main.dart::MyApp" o-- "app::core::services::auth::apple_sign_in_available.dart::AppleSignInAvailable"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::main.dart::MyApp"
+
+class "app::provider_setup.dart::InitialProviderSetup" {
+  +AuthServiceType initialAuthServiceType
+  +AppleSignInAvailable appleSignInAvailable
+  +List<SingleChildCloneableWidget> providers
+  +List<SingleChildCloneableWidget> independentServices
+  +List<SingleChildCloneableWidget> dependentServices
+  +List<SingleChildCloneableWidget> uiConsumableProviders
+}
+
+"app::provider_setup.dart::InitialProviderSetup" o-- "app::core::services::auth::auth_service_adapter.dart::AuthServiceType"
+"app::provider_setup.dart::InitialProviderSetup" o-- "app::core::services::auth::apple_sign_in_available.dart::AppleSignInAvailable"
+
+class "app::ui::layout::futuring_settings.dart::FuturingSettings" {
+  {static} -ThemeData _androidTheme
+  {static} +ThemeData globalTheme
+  {static} +Map getGlobalRoutes()
+  {static} -Map _getAndroidRoutes()
+}
+
+"app::ui::layout::futuring_settings.dart::FuturingSettings" o-- "flutter::src::material::theme_data.dart::ThemeData"
+
+class "app::ui::views::activity::activity_view.dart::ActivityView" {
+  {static} +String routeName
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::activity::activity_view.dart::ActivityView"
+
+class "app::ui::views::auth_view.dart::AuthMode" {
+  +int index
+  {static} +List<AuthMode> values
+  {static} +AuthMode Signup
+  {static} +AuthMode Login
+}
+
+"app::ui::views::auth_view.dart::AuthMode" o-- "app::ui::views::auth_view.dart::AuthMode"
+
+class "app::ui::views::auth_view.dart::AuthView" {
+  {static} +String routeName
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::auth_view.dart::AuthView"
+
+class "app::ui::views::auth_view.dart::AuthCard" {
+  +_AuthCardState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "app::ui::views::auth_view.dart::AuthCard"
+
+class "app::ui::views::auth_view.dart::_AuthCardState" {
+  -GlobalKey<FormState> _formKey
+  -AuthMode _authMode
+  -Map<String, String> _authData
+  -bool _isLoading
+  -TextEditingController _passwordController
+  -AnimationController _controller
+  -Animation<Offset> _slideAnimation
+  -Animation<double> _opacityAnimation
+  +void initState()
+  +void dispose()
+  -void _showErrorDialog()
+  -Future _submit()
+  -void _switchAuthMode()
+  +Widget build()
+}
+
+"app::ui::views::auth_view.dart::_AuthCardState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"app::ui::views::auth_view.dart::_AuthCardState" o-- "app::ui::views::auth_view.dart::AuthMode"
+"app::ui::views::auth_view.dart::_AuthCardState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"app::ui::views::auth_view.dart::_AuthCardState" o-- "flutter::src::animation::animation_controller.dart::AnimationController"
+"app::ui::views::auth_view.dart::_AuthCardState" o-- "flutter::src::animation::animation.dart::Animation<Offset>"
+"app::ui::views::auth_view.dart::_AuthCardState" o-- "flutter::src::animation::animation.dart::Animation<double>"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "app::ui::views::auth_view.dart::_AuthCardState"
+"flutter::src::widgets::ticker_provider.dart::SingleTickerProviderStateMixin<T>" <|-- "app::ui::views::auth_view.dart::_AuthCardState"
+
+class "app::ui::views::auth_widget.dart::AuthWidget" {
+  +AsyncSnapshot<User> userSnapshot
+  +Widget build()
+}
+
+"app::ui::views::auth_widget.dart::AuthWidget" o-- "flutter::src::widgets::async.dart::AsyncSnapshot<User>"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::auth_widget.dart::AuthWidget"
+
+class "app::ui::views::auth_widget_builder.dart::AuthWidgetBuilder" {
+  +Widget Function(BuildContext, AsyncSnapshot<User>) builder
+  +Widget build()
+}
+
+"app::ui::views::auth_widget_builder.dart::AuthWidgetBuilder" o-- "app::ui::views::auth_widget_builder.dart::Widget Function(BuildContext, AsyncSnapshot<User>)"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::auth_widget_builder.dart::AuthWidgetBuilder"
+
+class "app::ui::views::challenges::challange_item.dart::ChallengeItem" {
+  +Challenge challenge
+  +Widget build()
+}
+
+"app::ui::views::challenges::challange_item.dart::ChallengeItem" o-- "app::core::models::challenge.dart::Challenge"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::challenges::challange_item.dart::ChallengeItem"
+
+class "app::ui::views::challenges::challenges_grid.dart::ChallengesGrid" {
+  +bool showFavs
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::challenges::challenges_grid.dart::ChallengesGrid"
+
+class "app::ui::views::challenges::challenges_view.dart::ChallengesView" {
+  {static} +String routeName
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::challenges::challenges_view.dart::ChallengesView"
+
+class "app::ui::views::challenges::challenge_item_detail.dart::ChallengeItemDetail" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::challenges::challenge_item_detail.dart::ChallengeItemDetail"
+
+class "app::ui::views::challenges::edit_challenge_view.dart::EditChallengesView" {
+  {static} +String routeName
+  +_EditChallengeViewState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "app::ui::views::challenges::edit_challenge_view.dart::EditChallengesView"
+
+class "app::ui::views::challenges::edit_challenge_view.dart::_EditChallengeViewState" {
+  -FocusNode _durationFocusNode
+  -FocusNode _descriptionFocusNode
+  -TextEditingController _imageUrlController
+  -FocusNode _imageUrlFocusNode
+  -GlobalKey<FormState> _form
+  -File _pickedImage
+  -Challenge _editedChallenge
+  -Map<String, Object> _initValues
+  -bool _isInit
+  -bool _isLoading
+  -void _selectImage()
+  +void initState()
+  +void didChangeDependencies()
+  +void dispose()
+  -void _updateImageUrl()
+  -Future _saveForm()
+  +Widget build()
+}
+
+"app::ui::views::challenges::edit_challenge_view.dart::_EditChallengeViewState" o-- "flutter::src::widgets::focus_manager.dart::FocusNode"
+"app::ui::views::challenges::edit_challenge_view.dart::_EditChallengeViewState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"app::ui::views::challenges::edit_challenge_view.dart::_EditChallengeViewState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"app::ui::views::challenges::edit_challenge_view.dart::_EditChallengeViewState" o-- "dart::io::File"
+"app::ui::views::challenges::edit_challenge_view.dart::_EditChallengeViewState" o-- "app::core::models::challenge.dart::Challenge"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "app::ui::views::challenges::edit_challenge_view.dart::_EditChallengeViewState"
+
+class "app::ui::views::email_link_error_presenter.dart::EmailLinkErrorPresenter" {
+  +Widget child
+  +Stream<EmailLinkError> errorStream
+  {static} +Widget create()
+  +_EmailLinkErrorPresenterState createState()
+}
+
+"app::ui::views::email_link_error_presenter.dart::EmailLinkErrorPresenter" o-- "flutter::src::widgets::framework.dart::Widget"
+"app::ui::views::email_link_error_presenter.dart::EmailLinkErrorPresenter" o-- "dart::async::Stream<EmailLinkError>"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "app::ui::views::email_link_error_presenter.dart::EmailLinkErrorPresenter"
+
+class "app::ui::views::email_link_error_presenter.dart::_EmailLinkErrorPresenterState" {
+  -StreamSubscription<EmailLinkError> _onEmailLinkErrorSubscription
+  +void initState()
+  +void dispose()
+  +Widget build()
+}
+
+"app::ui::views::email_link_error_presenter.dart::_EmailLinkErrorPresenterState" o-- "dart::async::StreamSubscription<EmailLinkError>"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "app::ui::views::email_link_error_presenter.dart::_EmailLinkErrorPresenterState"
+
+class "app::ui::views::home_page.dart::HomePage" {
+  +_HomePageState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "app::ui::views::home_page.dart::HomePage"
+
+class "app::ui::views::home_page.dart::_HomePageState" {
+  -List<Map<String, Object>> _pages
+  -int _selectedPageIndex
+  +void initState()
+  -void _selectPage()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "app::ui::views::home_page.dart::_HomePageState"
+
+class "app::ui::views::inspiration::inspiration_view.dart::InspirationView" {
+  {static} +String routeName
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::inspiration::inspiration_view.dart::InspirationView"
+
+class "app::ui::views::profile::profile_appdrawer.dart::ProfileDrawer" {
+  -Future _signOut()
+  -Future _confirmSignOut()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::profile::profile_appdrawer.dart::ProfileDrawer"
+
+class "app::ui::views::profile::profile_view.dart::ProfileView" {
+  {static} +String routeName
+  +Widget build()
+  -Widget _buildUserInfo()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::profile::profile_view.dart::ProfileView"
+
+class "app::ui::views::settings::settings_view.dart::SettingsView" {
+  {static} +String routeName
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::settings::settings_view.dart::SettingsView"
+
+class "app::ui::views::sign_in::auth_service_type_selector.dart::AuthServiceTypeSelector" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::sign_in::auth_service_type_selector.dart::AuthServiceTypeSelector"
+
+class "app::ui::views::sign_in::developer_menu.dart::DeveloperMenu" {
+  +Widget build()
+  -Widget _buildOptions()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::sign_in::developer_menu.dart::DeveloperMenu"
+
+class "app::ui::views::sign_in::email_link::email_link_sign_in_page.dart::EmailLinkSignInPage" {
+  +FirebaseEmailLinkHandler linkHandler
+  +AuthService authService
+  +void Function() onSignedIn
+  {static} +Future show()
+  +_EmailLinkSignInPageState createState()
+}
+
+"app::ui::views::sign_in::email_link::email_link_sign_in_page.dart::EmailLinkSignInPage" o-- "app::core::services::auth::firebase_email_link_handler.dart::FirebaseEmailLinkHandler"
+"app::ui::views::sign_in::email_link::email_link_sign_in_page.dart::EmailLinkSignInPage" o-- "app::core::services::auth::auth_service.dart::AuthService"
+"app::ui::views::sign_in::email_link::email_link_sign_in_page.dart::EmailLinkSignInPage" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "app::ui::views::sign_in::email_link::email_link_sign_in_page.dart::EmailLinkSignInPage"
+
+class "app::ui::views::sign_in::email_link::email_link_sign_in_page.dart::_EmailLinkSignInPageState" {
+  -String _email
+  -GlobalKey<FormState> _formKey
+  -RegexValidator _emailSubmitValidator
+  -TextEditingController _emailController
+  -StreamSubscription<User> _onAuthStateChangedSubscription
+  +void initState()
+  +void dispose()
+  -Future _sendEmailLink()
+  -Future _validateAndSubmit()
+  +Widget build()
+  -Widget _buildForm()
+}
+
+"app::ui::views::sign_in::email_link::email_link_sign_in_page.dart::_EmailLinkSignInPageState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"app::ui::views::sign_in::email_link::email_link_sign_in_page.dart::_EmailLinkSignInPageState" o-- "app::ui::views::sign_in::validator.dart::RegexValidator"
+"app::ui::views::sign_in::email_link::email_link_sign_in_page.dart::_EmailLinkSignInPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"app::ui::views::sign_in::email_link::email_link_sign_in_page.dart::_EmailLinkSignInPageState" o-- "dart::async::StreamSubscription<User>"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "app::ui::views::sign_in::email_link::email_link_sign_in_page.dart::_EmailLinkSignInPageState"
+
+class "app::ui::views::sign_in::email_password::email_password_sign_in_model.dart::EmailPasswordSignInFormType" {
+  +int index
+  {static} +List<EmailPasswordSignInFormType> values
+  {static} +EmailPasswordSignInFormType signIn
+  {static} +EmailPasswordSignInFormType register
+  {static} +EmailPasswordSignInFormType forgotPassword
+}
+
+"app::ui::views::sign_in::email_password::email_password_sign_in_model.dart::EmailPasswordSignInFormType" o-- "app::ui::views::sign_in::email_password::email_password_sign_in_model.dart::EmailPasswordSignInFormType"
+
+class "app::ui::views::sign_in::email_password::email_password_sign_in_model.dart::EmailPasswordSignInModel" {
+  +AuthService auth
+  +String email
+  +String password
+  +EmailPasswordSignInFormType formType
+  +bool isLoading
+  +bool submitted
+  +String passwordLabelText
+  +String primaryButtonText
+  +String secondaryButtonText
+  +EmailPasswordSignInFormType secondaryActionFormType
+  +String errorAlertTitle
+  +String title
+  +bool canSubmitEmail
+  +bool canSubmitPassword
+  +bool canSubmit
+  +String emailErrorText
+  +String passwordErrorText
+  +Future submit()
+  +void updateEmail()
+  +void updatePassword()
+  +void updateFormType()
+  +void updateWith()
+  +String toString()
+}
+
+"app::ui::views::sign_in::email_password::email_password_sign_in_model.dart::EmailPasswordSignInModel" o-- "app::core::services::auth::auth_service.dart::AuthService"
+"app::ui::views::sign_in::email_password::email_password_sign_in_model.dart::EmailPasswordSignInModel" o-- "app::ui::views::sign_in::email_password::email_password_sign_in_model.dart::EmailPasswordSignInFormType"
+"app::ui::views::sign_in::validator.dart::EmailAndPasswordValidators" <|-- "app::ui::views::sign_in::email_password::email_password_sign_in_model.dart::EmailPasswordSignInModel"
+"flutter::src::foundation::change_notifier.dart::ChangeNotifier" <|-- "app::ui::views::sign_in::email_password::email_password_sign_in_model.dart::EmailPasswordSignInModel"
+
+class "app::ui::views::sign_in::email_password::email_password_sign_in_page.dart::EmailPasswordSignInPage" {
+  +EmailPasswordSignInModel model
+  +void Function() onSignedIn
+  {static} +Future show()
+  {static} +Widget create()
+  +_EmailPasswordSignInPageState createState()
+}
+
+"app::ui::views::sign_in::email_password::email_password_sign_in_page.dart::EmailPasswordSignInPage" o-- "app::ui::views::sign_in::email_password::email_password_sign_in_model.dart::EmailPasswordSignInModel"
+"app::ui::views::sign_in::email_password::email_password_sign_in_page.dart::EmailPasswordSignInPage" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "app::ui::views::sign_in::email_password::email_password_sign_in_page.dart::EmailPasswordSignInPage"
+
+class "app::ui::views::sign_in::email_password::email_password_sign_in_page.dart::_EmailPasswordSignInPageState" {
+  -FocusScopeNode _node
+  -TextEditingController _emailController
+  -TextEditingController _passwordController
+  +EmailPasswordSignInModel model
+  +void dispose()
+  -void _showSignInError()
+  -Future _submit()
+  -void _emailEditingComplete()
+  -void _passwordEditingComplete()
+  -void _updateFormType()
+  -Widget _buildEmailField()
+  -Widget _buildPasswordField()
+  -Widget _buildContent()
+  +Widget build()
+}
+
+"app::ui::views::sign_in::email_password::email_password_sign_in_page.dart::_EmailPasswordSignInPageState" o-- "flutter::src::widgets::focus_manager.dart::FocusScopeNode"
+"app::ui::views::sign_in::email_password::email_password_sign_in_page.dart::_EmailPasswordSignInPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"app::ui::views::sign_in::email_password::email_password_sign_in_page.dart::_EmailPasswordSignInPageState" o-- "app::ui::views::sign_in::email_password::email_password_sign_in_model.dart::EmailPasswordSignInModel"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "app::ui::views::sign_in::email_password::email_password_sign_in_page.dart::_EmailPasswordSignInPageState"
+
+class "app::ui::views::sign_in::sign_in_manager.dart::SignInManager" {
+  +AuthService auth
+  +ValueNotifier<bool> isLoading
+  -Future _signIn()
+  +Future signInAnonymously()
+  +Future signInWithGoogle()
+  +Future signInWithFacebook()
+  +Future signInWithApple()
+}
+
+"app::ui::views::sign_in::sign_in_manager.dart::SignInManager" o-- "app::core::services::auth::auth_service.dart::AuthService"
+"app::ui::views::sign_in::sign_in_manager.dart::SignInManager" o-- "flutter::src::foundation::change_notifier.dart::ValueNotifier<bool>"
+
+class "app::ui::views::sign_in::sign_in_page.dart::SignInPageBuilder" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::sign_in::sign_in_page.dart::SignInPageBuilder"
+
+class "app::ui::views::sign_in::sign_in_page.dart::SignInPage" {
+  +SignInManager manager
+  +String title
+  +bool isLoading
+  {static} +Key googleButtonKey
+  {static} +Key facebookButtonKey
+  {static} +Key emailPasswordButtonKey
+  {static} +Key emailLinkButtonKey
+  {static} +Key anonymousButtonKey
+  -Future _showSignInError()
+  -Future _signInAnonymously()
+  -Future _signInWithGoogle()
+  -Future _signInWithFacebook()
+  -Future _signInWithApple()
+  -Future _signInWithEmailAndPassword()
+  -Future _signInWithEmailLink()
+  +Widget build()
+  -Widget _buildHeader()
+  -Widget _buildSignIn()
+}
+
+"app::ui::views::sign_in::sign_in_page.dart::SignInPage" o-- "app::ui::views::sign_in::sign_in_manager.dart::SignInManager"
+"app::ui::views::sign_in::sign_in_page.dart::SignInPage" o-- "flutter::src::foundation::key.dart::Key"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::sign_in::sign_in_page.dart::SignInPage"
+
+class "app::ui::views::sign_in::social_sign_in_button.dart::SocialSignInButton" {
+}
+
+"app::ui::widgets::custom_raised_button.dart::CustomRaisedButton" <|-- "app::ui::views::sign_in::social_sign_in_button.dart::SocialSignInButton"
+
+class "app::ui::views::sign_in::social_sign_in_button.dart::SignInButton" {
+}
+
+"app::ui::widgets::custom_raised_button.dart::CustomRaisedButton" <|-- "app::ui::views::sign_in::social_sign_in_button.dart::SignInButton"
+
+abstract class "app::ui::views::sign_in::validator.dart::StringValidator" {
+  +bool isValid()
+}
+
+class "app::ui::views::sign_in::validator.dart::RegexValidator" {
+  +String regexSource
+  +bool isValid()
+}
+
+"app::ui::views::sign_in::validator.dart::StringValidator" <|-- "app::ui::views::sign_in::validator.dart::RegexValidator"
+
+class "app::ui::views::sign_in::validator.dart::ValidatorInputFormatter" {
+  +StringValidator editingValidator
+  +TextEditingValue formatEditUpdate()
+}
+
+"app::ui::views::sign_in::validator.dart::ValidatorInputFormatter" o-- "app::ui::views::sign_in::validator.dart::StringValidator"
+"flutter::src::services::text_formatter.dart::TextInputFormatter" <|-- "app::ui::views::sign_in::validator.dart::ValidatorInputFormatter"
+
+class "app::ui::views::sign_in::validator.dart::EmailEditingRegexValidator" {
+}
+
+"app::ui::views::sign_in::validator.dart::RegexValidator" <|-- "app::ui::views::sign_in::validator.dart::EmailEditingRegexValidator"
+
+class "app::ui::views::sign_in::validator.dart::EmailSubmitRegexValidator" {
+}
+
+"app::ui::views::sign_in::validator.dart::RegexValidator" <|-- "app::ui::views::sign_in::validator.dart::EmailSubmitRegexValidator"
+
+class "app::ui::views::sign_in::validator.dart::NonEmptyStringValidator" {
+  +bool isValid()
+}
+
+"app::ui::views::sign_in::validator.dart::StringValidator" <|-- "app::ui::views::sign_in::validator.dart::NonEmptyStringValidator"
+
+class "app::ui::views::sign_in::validator.dart::MinLengthStringValidator" {
+  +int minLength
+  +bool isValid()
+}
+
+"app::ui::views::sign_in::validator.dart::StringValidator" <|-- "app::ui::views::sign_in::validator.dart::MinLengthStringValidator"
+
+class "app::ui::views::sign_in::validator.dart::EmailAndPasswordValidators" {
+  +TextInputFormatter emailInputFormatter
+  +StringValidator emailSubmitValidator
+  +StringValidator passwordRegisterSubmitValidator
+  +StringValidator passwordSignInSubmitValidator
+}
+
+"app::ui::views::sign_in::validator.dart::EmailAndPasswordValidators" o-- "flutter::src::services::text_formatter.dart::TextInputFormatter"
+"app::ui::views::sign_in::validator.dart::EmailAndPasswordValidators" o-- "app::ui::views::sign_in::validator.dart::StringValidator"
+
+class "app::ui::views::splash_view.dart::SplashView" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::views::splash_view.dart::SplashView"
+
+class "app::ui::views::tabs_view.dart::TabsScreen" {
+  +_TabsScreenState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "app::ui::views::tabs_view.dart::TabsScreen"
+
+class "app::ui::views::tabs_view.dart::_TabsScreenState" {
+  -List<Map<String, Object>> _pages
+  -int _selectedPageIndex
+  +void initState()
+  -void _selectPage()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State<T>" <|-- "app::ui::views::tabs_view.dart::_TabsScreenState"
+
+class "app::ui::widgets::adaptive_scaffold.dart::AdaptiveScaffold" {
+  +String title
+  +List<Widget> actions
+  +Widget body
+  +Widget drawer
+  +Widget bottomNavigationBar
+  +Function centerButtonAction
+  +Widget build()
+}
+
+"app::ui::widgets::adaptive_scaffold.dart::AdaptiveScaffold" o-- "flutter::src::widgets::framework.dart::Widget"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::widgets::adaptive_scaffold.dart::AdaptiveScaffold"
+
+class "app::ui::widgets::avatar.dart::Avatar" {
+  +String photoUrl
+  +double radius
+  +Color borderColor
+  +double borderWidth
+  +Widget build()
+  -Decoration _borderDecoration()
+}
+
+"app::ui::widgets::avatar.dart::Avatar" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::widgets::avatar.dart::Avatar"
+
+class "app::ui::widgets::badge.dart::Badge" {
+  +Widget child
+  +String value
+  +Color color
+  +Widget build()
+}
+
+"app::ui::widgets::badge.dart::Badge" o-- "flutter::src::widgets::framework.dart::Widget"
+"app::ui::widgets::badge.dart::Badge" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::widgets::badge.dart::Badge"
+
+class "app::ui::widgets::custom_raised_button.dart::CustomRaisedButton" {
+  +Widget child
+  +Color color
+  +Color textColor
+  +double height
+  +double borderRadius
+  +bool loading
+  +void Function() onPressed
+  +Widget buildSpinner()
+  +Widget build()
+}
+
+"app::ui::widgets::custom_raised_button.dart::CustomRaisedButton" o-- "flutter::src::widgets::framework.dart::Widget"
+"app::ui::widgets::custom_raised_button.dart::CustomRaisedButton" o-- "dart::ui::Color"
+"app::ui::widgets::custom_raised_button.dart::CustomRaisedButton" o-- "dart::ui::void Function()"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::widgets::custom_raised_button.dart::CustomRaisedButton"
+
+class "app::ui::widgets::form_submit_button.dart::FormSubmitButton" {
+}
+
+"app::ui::widgets::custom_raised_button.dart::CustomRaisedButton" <|-- "app::ui::widgets::form_submit_button.dart::FormSubmitButton"
+
+class "app::ui::widgets::image_input.dart::ImageInput" {
+  +Function onSelectImage
+  +_ImageInputState createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "app::ui::widgets::image_input.dart::ImageInput"
+
+class "app::ui::widgets::image_input.dart::_ImageInputState" {
+  -File _storedImage
+  -Future _takePicture()
+  +Widget build()
+}
+
+"app::ui::widgets::image_input.dart::_ImageInputState" o-- "dart::io::File"
+"flutter::src::widgets::framework.dart::State<T>" <|-- "app::ui::widgets::image_input.dart::_ImageInputState"
+
+class "app::ui::widgets::platform_alert_dialog.dart::PlatformAlertDialog" {
+  +String title
+  +String content
+  +String cancelActionText
+  +String defaultActionText
+  +Future show()
+  +Widget buildCupertinoWidget()
+  +Widget buildMaterialWidget()
+  -List _buildActions()
+}
+
+"app::ui::widgets::platform_widget.dart::PlatformWidget" <|-- "app::ui::widgets::platform_alert_dialog.dart::PlatformAlertDialog"
+
+class "app::ui::widgets::platform_alert_dialog.dart::PlatformAlertDialogAction" {
+  +Widget child
+  +void Function() onPressed
+  +Widget buildCupertinoWidget()
+  +Widget buildMaterialWidget()
+}
+
+"app::ui::widgets::platform_alert_dialog.dart::PlatformAlertDialogAction" o-- "flutter::src::widgets::framework.dart::Widget"
+"app::ui::widgets::platform_alert_dialog.dart::PlatformAlertDialogAction" o-- "dart::ui::void Function()"
+"app::ui::widgets::platform_widget.dart::PlatformWidget" <|-- "app::ui::widgets::platform_alert_dialog.dart::PlatformAlertDialogAction"
+
+class "app::ui::widgets::platform_exception_alert_dialog.dart::PlatformExceptionAlertDialog" {
+  {static} -Map<String, String> _errors
+  {static} -String _message()
+}
+
+"app::ui::widgets::platform_alert_dialog.dart::PlatformAlertDialog" <|-- "app::ui::widgets::platform_exception_alert_dialog.dart::PlatformExceptionAlertDialog"
+
+abstract class "app::ui::widgets::platform_widget.dart::PlatformWidget" {
+  +Widget buildCupertinoWidget()
+  +Widget buildMaterialWidget()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::widgets::platform_widget.dart::PlatformWidget"
+
+class "app::ui::widgets::segmented_control.dart::SegmentedControl<T>" {
+  +Widget header
+  +T value
+  +Map<T, Widget> children
+  +void Function(T) onValueChanged
+  +Widget build()
+}
+
+"app::ui::widgets::segmented_control.dart::SegmentedControl<T>" o-- "flutter::src::widgets::framework.dart::Widget"
+"app::ui::widgets::segmented_control.dart::SegmentedControl<T>" o-- "flutter::src::foundation::basic_types.dart::void Function(T)"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "app::ui::widgets::segmented_control.dart::SegmentedControl<T>"
+
+
+@enduml
