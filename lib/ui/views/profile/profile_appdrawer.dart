@@ -71,8 +71,10 @@ class ProfileDrawer extends StatelessWidget {
             leading: Icon(Icons.settings),
             title: Text('Settings'),
             onTap: () {
+              // NavigationService.instance.pushReplacementNamed (SettingsView.routeName);
               Navigator.of(context)
                   .pushReplacementNamed(SettingsView.routeName);
+
               // Navigator.of(context).pushReplacement(
               //   CustomRoute(
               //     builder: (ctx) => OrdersScreen(),
@@ -85,15 +87,6 @@ class ProfileDrawer extends StatelessWidget {
               leading: Icon(Icons.exit_to_app),
               title: Text('Logout'),
               onTap: () => _confirmSignOut(context)
-              //  {
-              //   bool response = await _confirmSignOut(context);
-
-              //   Navigator.of(context).pop();
-              //   Navigator.of(context).pushReplacementNamed('/');
-              //   // Navigator.of(context)
-              //   //     .pushReplacementNamed(UserProductsScreen.routeName);
-              //   Provider.of<Auth>(context, listen: false).logout();
-              // },
               ),
         ],
       ),

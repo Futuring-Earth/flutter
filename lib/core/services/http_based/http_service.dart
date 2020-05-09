@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-import '../models/base-model.dart';
-import '../models/http_exception.dart';
+import '../../models/base-model.dart';
+import '../../models/http_exception.dart';
 import './database_service.dart';
 import 'package:app/helpers/item_creator.dart';
 

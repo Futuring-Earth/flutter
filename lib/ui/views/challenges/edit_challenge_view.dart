@@ -136,6 +136,7 @@ class _EditChallengeViewState extends State<EditChallengesView> {
               FlatButton(
                 child: Text('Okay'),
                 onPressed: () {
+                  // NavigationService.instance.goBack();
                   Navigator.of(ctx).pop();
                 },
               )
@@ -143,18 +144,12 @@ class _EditChallengeViewState extends State<EditChallengesView> {
           ),
         );
       }
-      // finally {
-      //   setState(() {
-      //     _isLoading = false;
-      //   });
-      //   Navigator.of(context).pop();
-      // }
     }
     setState(() {
       _isLoading = false;
     });
+    // NavigationService.instance.goBack();
     Navigator.of(context).pop();
-    // Navigator.of(context).pop();
   }
 
   @override

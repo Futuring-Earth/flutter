@@ -45,6 +45,11 @@ class FuturingSettings {
       ChallengesView.routeName: (ctx) => ChallengesView(),
       SettingsView.routeName: (ctx) => SettingsView(),
       EditChallengesView.routeName: (ctx) => EditChallengesView(),
+      //AuthWidget.routeName: (ctx) => AuthWidget(userSnapshot: userSnapshot),
+      // '/': (ctx) => EmailLinkErrorPresenter.create(
+      //       ctx,
+      //       child: AuthWidget(userSnapshot: userSnapshot),
+      //     )
     };
   }
 }

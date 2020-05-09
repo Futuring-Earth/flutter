@@ -53,6 +53,7 @@ class _TabsScreenState extends State<TabsScreen> {
         IconButton(
           icon: const Icon(Icons.add),
           onPressed: () {
+            // NavigationService.instance.pushNamed(EditChallengesView.routeName); 
             Navigator.of(context).pushNamed(EditChallengesView.routeName);
           },
         )

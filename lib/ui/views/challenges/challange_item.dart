@@ -26,6 +26,8 @@ class ChallengeItem extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.update),
               onPressed: () {
+                // NavigationService.instance.pushNamed(EditChallengesView.routeName,
+                //     arguments: challenge.id);
                 Navigator.of(context).pushNamed(EditChallengesView.routeName,
                     arguments: challenge.id);
               },

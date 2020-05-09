@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/challenge.dart';
-import '../../services/challenge_graph_service.dart';
+import '../../services/http_based/challenge_graph_service.dart';
 
 class ChallengeViewModel with ChangeNotifier {
   String _authToken;

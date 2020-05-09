@@ -18,18 +18,21 @@ class User extends BaseModel {
     this.email,
     this.photoUrl,
     this.displayName,
-    this.aboutMe
+    this.aboutMe,
+    this.lastSeen
   }) : super(id: uid, label: 'User');
 
   @JsonKey(name: 'uid', ignore: false, required: true, defaultValue: null)
   final String uid;
-  @JsonKey(name: 'email', ignore: false, required: true, defaultValue: null)
+  @JsonKey(name: 'email', ignore: false, required: false, defaultValue: null)
   final String email;
   @JsonKey(name: 'photoUrl', ignore: false, required: false, defaultValue: null)
   final String photoUrl;
-  @JsonKey(name: 'displayName', ignore: false, required: true, defaultValue: null)
+  @JsonKey(name: 'displayName', ignore: false, required: false, defaultValue: null)
   final String displayName;
-  @JsonKey(name: 'aboutMe', ignore: false, required: true, defaultValue: null)
+  @JsonKey(name: 'lastSeen', ignore: false, required: false, defaultValue: null)
+  final DateTime lastSeen;
+  @JsonKey(name: 'aboutMe', ignore: false, required: false, defaultValue: null)
   final String aboutMe;
 
    @override
@@ -37,5 +40,8 @@ class User extends BaseModel {
       _$UserFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$UserToJson(this);
+  Map<String, dynamic> toJson() { 
+    //update the lastSeen value to DateTime.now().toUtc()
+    return _$UserToJson(this).update('lastSeen', (value) => DateTime.now().toUtc());
+  }
 }

@@ -149,6 +149,7 @@ class _AuthCardState extends State<AuthCard>
           FlatButton(
             child: Text('Okay'),
             onPressed: () {
+              //NavigationService.instance.goBack();
               Navigator.of(ctx).pop();
             },
           )

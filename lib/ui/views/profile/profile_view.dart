@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:app/core/models/user.dart';
 import 'package:app/ui/widgets/avatar.dart';
 import 'package:flutter/material.dart';

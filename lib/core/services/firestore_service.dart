@@ -2,20 +2,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:meta/meta.dart';
 
 class FirestoreService {
-  FirestoreService._();
-  static final instance = FirestoreService._();
+  Firestore _db;
+  
+  static final FirestoreService instance = FirestoreService._();
 
+  FirestoreService._()
+  {
+    _db = Firestore.instance;
+  }
+  
   Future<void> setData({
     @required String path,
     @required Map<String, dynamic> data,
   }) async {
-    final reference = Firestore.instance.document(path);
+    final reference = _db.document(path);
     print('$path: $data');
     await reference.setData(data);
   }
 
   Future<void> deleteData({@required String path}) async {
-    final reference = Firestore.instance.document(path);
+    final reference = _db.document(path);
     print('delete: $path');
     await reference.delete();
   }
@@ -26,7 +32,7 @@ class FirestoreService {
     Query queryBuilder(Query query),
     int sort(T lhs, T rhs),
   }) {
-    Query query = Firestore.instance.collection(path);
+    Query query = _db.collection(path);
     if (queryBuilder != null) {
       query = queryBuilder(query);
     }
@@ -47,7 +53,7 @@ class FirestoreService {
     @required String path,
     @required T builder(Map<String, dynamic> data, String documentID),
   }) {
-    final DocumentReference reference = Firestore.instance.document(path);
+    final DocumentReference reference = _db.document(path);
     final Stream<DocumentSnapshot> snapshots = reference.snapshots();
     return snapshots.map((snapshot) => builder(snapshot.data, snapshot.documentID));
   }
@@ -56,7 +62,7 @@ class FirestoreService {
     @required String path,
     @required T builder(Map<String, dynamic> data, String documentID),
   }) async {
-    final DocumentReference reference = Firestore.instance.document(path);
+    final DocumentReference reference = _db.document(path);
     final DocumentSnapshot snapshot = await reference.get();
     if (snapshot.exists)
     {

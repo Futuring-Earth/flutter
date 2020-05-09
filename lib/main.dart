@@ -40,6 +40,8 @@ class MyApp extends StatelessWidget {
       child: AuthWidgetBuilder(
           builder: (BuildContext context, AsyncSnapshot<User> userSnapshot) {
         return MaterialApp(
+          //navigatorKey: NavigationService.instance.navigatorKey,
+          initialRoute: '/',  // this is equal to the widget defined as 'home'
           theme: FuturingSettings.globalTheme,
           home: EmailLinkErrorPresenter.create(
             context,
