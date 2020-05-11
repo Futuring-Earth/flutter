@@ -48,10 +48,22 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // final mediaQuery = MediaQuery.of(context);
+    // final height= mediaQuery.size.height -
+    //         Scaffold.of(context).appBarMaxHeight -
+    //         mediaQuery.padding.top,
+            
     return AdaptiveScaffold(
       actions: [
         IconButton(
           icon: const Icon(Icons.add),
+          onPressed: () {
+            // NavigationService.instance.pushNamed(EditChallengesView.routeName);
+            Navigator.of(context).pushNamed(EditChallengesView.routeName);
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.chat_bubble_outline),
           onPressed: () {
             // NavigationService.instance.pushNamed(EditChallengesView.routeName);
             Navigator.of(context).pushNamed(EditChallengesView.routeName);

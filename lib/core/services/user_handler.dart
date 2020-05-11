@@ -40,6 +40,7 @@ class UserHandler {
       }
       else
       {
+        _service.updateData(path: APIPath.user(user.uid), data: {"lastSeen": DateTime.now().toUtc().toIso8601String()});
         await prefs.setString('id', userInDb.uid);
         await prefs.setString('displayName', userInDb.displayName);
         await prefs.setString('photoUrl', userInDb.photoUrl);

@@ -38,7 +38,7 @@ class FuturingSettings {
   }
 
   static Map<String, Widget Function(BuildContext)> _getAndroidRoutes(ctx) {
-    return {
+     return {
       ProfileView.routeName: (ctx) => ProfileView(),
       ActivityView.routeName: (ctx) => ActivityView(),
       InspirationView.routeName: (ctx) => InspirationView(),

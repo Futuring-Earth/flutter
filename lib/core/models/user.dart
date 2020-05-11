@@ -31,7 +31,7 @@ class User extends BaseModel {
   @JsonKey(name: 'displayName', ignore: false, required: false, defaultValue: null)
   final String displayName;
   @JsonKey(name: 'lastSeen', ignore: false, required: false, defaultValue: null)
-  final DateTime lastSeen;
+  final String lastSeen;
   @JsonKey(name: 'aboutMe', ignore: false, required: false, defaultValue: null)
   final String aboutMe;
 
@@ -42,6 +42,8 @@ class User extends BaseModel {
   @override
   Map<String, dynamic> toJson() { 
     //update the lastSeen value to DateTime.now().toUtc()
-    return _$UserToJson(this).update('lastSeen', (value) => DateTime.now().toUtc());
+    Map<String, dynamic> jsonUser = _$UserToJson(this);
+    jsonUser.update('lastSeen', (value) => DateTime.now().toUtc());
+    return jsonUser;
   }
 }
