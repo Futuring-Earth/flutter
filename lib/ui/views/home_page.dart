@@ -1,3 +1,4 @@
+import 'package:app/ui/views/chat/recent_conversationSnippets_view.dart';
 import 'package:app/ui/views/inspiration/inspiration_view.dart';
 import 'package:app/ui/views/challenges/challenges_view.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,7 @@ class _HomePageState extends State<HomePage> {
     // final height= mediaQuery.size.height -
     //         Scaffold.of(context).appBarMaxHeight -
     //         mediaQuery.padding.top,
-            
+
     return AdaptiveScaffold(
       actions: [
         IconButton(
@@ -65,8 +66,9 @@ class _HomePageState extends State<HomePage> {
         IconButton(
           icon: const Icon(Icons.chat_bubble_outline),
           onPressed: () {
-            // NavigationService.instance.pushNamed(EditChallengesView.routeName);
-            Navigator.of(context).pushNamed(EditChallengesView.routeName);
+            print('navigate to ${RecentConversationSnippetsView.routeName}');
+            Navigator.of(context)
+                .pushNamed(RecentConversationSnippetsView.routeName);
           },
         )
       ],

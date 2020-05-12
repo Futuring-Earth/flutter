@@ -6,66 +6,24 @@ part of 'conversation.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ConversationSnippet _$ConversationSnippetFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, requiredKeys: const ['id', 'connversationId']);
-  return ConversationSnippet(
+Conversation _$ConversationFromJson(Map<String, dynamic> json) {
+  $checkKeys(json,
+      requiredKeys: const ['id', 'members', 'messages', 'ownerID']);
+  return Conversation(
     id: json['id'] as String,
-    connversationId: json['connversationId'] as String,
-    lastMessage: json['lastMessage'] as String,
-    unseenCount: json['unseenCount'] as int ?? 0,
-    timestamp: json['timestamp'] as String,
-    name: json['name'] as String,
-    photoUrl: json['photoUrl'] as String,
-    type: _$enumDecodeNullable(_$MessageTypeEnumMap, json['type']),
+    members: json['members'] as List,
+    messages: (json['messages'] as List)
+        ?.map((e) =>
+            e == null ? null : Message.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    ownerID: json['ownerID'] as String,
   );
 }
 
-Map<String, dynamic> _$ConversationSnippetToJson(
-        ConversationSnippet instance) =>
+Map<String, dynamic> _$ConversationToJson(Conversation instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'connversationId': instance.connversationId,
-      'lastMessage': instance.lastMessage,
-      'unseenCount': instance.unseenCount,
-      'timestamp': instance.timestamp,
-      'name': instance.name,
-      'photoUrl': instance.photoUrl,
-      'type': _$MessageTypeEnumMap[instance.type],
+      'members': instance.members,
+      'messages': instance.messages?.map((e) => e?.toJson())?.toList(),
+      'ownerID': instance.ownerID,
     };
-
-T _$enumDecode<T>(
-  Map<T, dynamic> enumValues,
-  dynamic source, {
-  T unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError('A value must be provided. Supported values: '
-        '${enumValues.values.join(', ')}');
-  }
-
-  final value = enumValues.entries
-      .singleWhere((e) => e.value == source, orElse: () => null)
-      ?.key;
-
-  if (value == null && unknownValue == null) {
-    throw ArgumentError('`$source` is not one of the supported values: '
-        '${enumValues.values.join(', ')}');
-  }
-  return value ?? unknownValue;
-}
-
-T _$enumDecodeNullable<T>(
-  Map<T, dynamic> enumValues,
-  dynamic source, {
-  T unknownValue,
-}) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
-}
-
-const _$MessageTypeEnumMap = {
-  MessageType.Text: 'Text',
-  MessageType.Image: 'Image',
-};

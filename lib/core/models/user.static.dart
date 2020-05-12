@@ -1,10 +1,4 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
-
 part of 'user.dart';
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
 
 User _$UserFromJson(Map<String, dynamic> json) {
   $checkKeys(json, requiredKeys: const ['uid']);
@@ -14,7 +8,9 @@ User _$UserFromJson(Map<String, dynamic> json) {
     photoUrl: json['photoUrl'] as String,
     displayName: json['displayName'] as String,
     aboutMe: json['aboutMe'] as String,
-    lastSeen: json['lastSeen'] as String,
+    lastSeen: json['lastSeen'] == null
+        ? null
+        : (json['lastSeen'] as Timestamp).toDate(),
   );
 }
 
@@ -23,6 +19,6 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
       'email': instance.email,
       'photoUrl': instance.photoUrl,
       'displayName': instance.displayName,
-      'lastSeen': instance.lastSeen,
+      'lastSeen': instance.lastSeen?.toIso8601String(),
       'aboutMe': instance.aboutMe,
     };

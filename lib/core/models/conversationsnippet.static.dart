@@ -1,25 +1,37 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'message.dart';
+part of 'conversationsnippet.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Message _$MessageFromJson(Map<String, dynamic> json) {
-  $checkKeys(json, requiredKeys: const ['senderId']);
-  return Message(
-    senderId: json['senderId'] as String,
-    content: json['v'] as String,
-    timestamp: json['timestamp'] as String,
+ConversationSnippet _$ConversationSnippetFromJson(Map<String, dynamic> json) {
+  $checkKeys(json, requiredKeys: const ['id', 'connversationId']);
+  return ConversationSnippet(
+    id: json['id'] as String,
+    connversationId: json['connversationId'] as String,
+    lastMessage: json['lastMessage'] as String,
+    unseenCount: json['unseenCount'] as int ?? 0,
+    timestamp: json['timestamp'] == null
+        ? null
+        : (json['timestamp'] as Timestamp).toDate(),
+    name: json['name'] as String,
+    photoUrl: json['photoUrl'] as String,
     type: _$enumDecodeNullable(_$MessageTypeEnumMap, json['type']),
   );
 }
 
-Map<String, dynamic> _$MessageToJson(Message instance) => <String, dynamic>{
-      'senderId': instance.senderId,
-      'v': instance.content,
-      'timestamp': instance.timestamp,
+Map<String, dynamic> _$ConversationSnippetToJson(
+        ConversationSnippet instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'connversationId': instance.connversationId,
+      'lastMessage': instance.lastMessage,
+      'unseenCount': instance.unseenCount,
+      'timestamp': instance.timestamp?.toIso8601String(),
+      'name': instance.name,
+      'photoUrl': instance.photoUrl,
       'type': _$MessageTypeEnumMap[instance.type],
     };
 

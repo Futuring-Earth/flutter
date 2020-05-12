@@ -13,45 +13,29 @@ part 'conversation.g.dart';
 /// JSON serialization logic to be generated.
 @JsonSerializable(explicitToJson: true)
 @immutable
-class ConversationSnippet extends BaseModel {
-  const ConversationSnippet({
-    @required this.id,
-    this.connversationId,
-    this.lastMessage,
-    this.unseenCount,
-    this.timestamp,
-    this.name,
-    this.photoUrl,
-    this.type
-  }) : super(id: id, label: 'ConversationSnippet');
+class Conversation extends BaseModel {
+  const Conversation(
+      {@required this.id, this.members, this.messages, this.ownerID})
+      : super(id: id, label: 'Conversation');
 
   @JsonKey(name: 'id', ignore: false, required: true, defaultValue: null)
   final String id;
-  @JsonKey(name: 'connversationId', ignore: false, required: true, defaultValue: null)
-  final String connversationId;
-  @JsonKey(name: 'lastMessage', ignore: false, required: false, defaultValue: null)
-  final String lastMessage;
-  @JsonKey(name: 'unseenCount', ignore: false, required: false, defaultValue: 0)
-  final int unseenCount;
-  @JsonKey(name: 'timestamp', ignore: false, required: false, defaultValue: null)
-  final String timestamp;
-
-  @JsonKey(name: 'name', ignore: false, required: false, defaultValue: null)
-  final String name;
-  @JsonKey(name: 'photoUrl', ignore: false, required: false, defaultValue: null)
-  final String photoUrl;
-  @JsonKey(name: 'type', ignore: false, required: false, defaultValue: null)
-  final MessageType type;
-
-   @override
-  factory ConversationSnippet.fromJson(Map<String, dynamic> json) =>
-      _$ConversationSnippetFromJson(json);
+  @JsonKey(name: 'members', ignore: false, required: true, defaultValue: null)
+  final List members;
+  @JsonKey(name: 'messages', ignore: false, required: true, defaultValue: null)
+  final List<Message> messages;
+  @JsonKey(name: 'ownerID', ignore: false, required: true, defaultValue: null)
+  final String ownerID;
 
   @override
-  Map<String, dynamic> toJson() { 
+  factory Conversation.fromJson(Map<String, dynamic> json) =>
+      _$ConversationFromJson(json);
+
+  @override
+  Map<String, dynamic> toJson() {
     //update the lastSeen value to DateTime.now().toUtc()
-    Map<String, dynamic> jsonConversationSnippet = _$ConversationSnippetToJson(this);
-    jsonConversationSnippet.update('lastSeen', (value) => DateTime.now().toUtc());
-    return jsonConversationSnippet;
+    Map<String, dynamic> jsonConversation = _$ConversationToJson(this);
+    jsonConversation.update('lastSeen', (value) => DateTime.now().toUtc());
+    return jsonConversation;
   }
 }

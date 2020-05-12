@@ -3,14 +3,13 @@ import 'package:meta/meta.dart';
 
 class FirestoreService {
   Firestore _db;
-  
+
   static final FirestoreService instance = FirestoreService._();
 
-  FirestoreService._()
-  {
+  FirestoreService._() {
     _db = Firestore.instance;
   }
-  
+
   Future<void> setData({
     @required String path,
     @required Map<String, dynamic> data,
@@ -29,6 +28,20 @@ class FirestoreService {
     await reference.updateData(data);
   }
 
+  Future<void> appendItemtoArray(
+      {@required String path,
+      @required Map<String, dynamic> data,
+      @required String arrayName}) async {
+    final reference = _db.document(path);
+    print('$path: $data');
+    await reference.updateData({
+      arrayName: FieldValue.arrayUnion(
+        [
+          data,
+        ],
+      ),
+    });
+  }
 
   Future<void> deleteData({@required String path}) async {
     final reference = _db.document(path);
@@ -65,7 +78,8 @@ class FirestoreService {
   }) {
     final DocumentReference reference = _db.document(path);
     final Stream<DocumentSnapshot> snapshots = reference.snapshots();
-    return snapshots.map((snapshot) => builder(snapshot.data, snapshot.documentID));
+    return snapshots
+        .map((snapshot) => builder(snapshot.data, snapshot.documentID));
   }
 
   Future<T> documentById<T>({
@@ -74,12 +88,9 @@ class FirestoreService {
   }) async {
     final DocumentReference reference = _db.document(path);
     final DocumentSnapshot snapshot = await reference.get();
-    if (snapshot.exists)
-    {
+    if (snapshot.exists) {
       return builder(snapshot.data, snapshot.documentID);
-    }
-    else
-    {
+    } else {
       return null;
     }
   }

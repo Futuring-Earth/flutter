@@ -1,3 +1,4 @@
+import 'package:app/ui/views/chat/recent_conversationSnippets_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/ui/views/activity/activity_view.dart';
@@ -38,13 +39,15 @@ class FuturingSettings {
   }
 
   static Map<String, Widget Function(BuildContext)> _getAndroidRoutes(ctx) {
-     return {
+    return {
       ProfileView.routeName: (ctx) => ProfileView(),
       ActivityView.routeName: (ctx) => ActivityView(),
       InspirationView.routeName: (ctx) => InspirationView(),
       ChallengesView.routeName: (ctx) => ChallengesView(),
       SettingsView.routeName: (ctx) => SettingsView(),
       EditChallengesView.routeName: (ctx) => EditChallengesView(),
+      RecentConversationSnippetsView.routeName: (ctx) =>
+          RecentConversationSnippetsView(),
       //AuthWidget.routeName: (ctx) => AuthWidget(userSnapshot: userSnapshot),
       // '/': (ctx) => EmailLinkErrorPresenter.create(
       //       ctx,
