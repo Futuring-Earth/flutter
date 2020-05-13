@@ -17,10 +17,11 @@ class RecentConversationSnippetsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final double _height = mediaQuery.size.height -
-        // Scaffold.of(context).appBarMaxHeight -
+        //Scaffold.of(context).appBarMaxHeight -
         mediaQuery.padding.top;
     final double _width = mediaQuery.size.width;
-    return Scaffold(
+    return AdaptiveScaffold(
+      title: 'Conversations',
       body: Container(
         color: Theme.of(context).backgroundColor,
         height: _height,
