@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "test-f0d3f"
+    "default": "test-f0d3f",
+    "dev": "sharedkarma"
   }
 }

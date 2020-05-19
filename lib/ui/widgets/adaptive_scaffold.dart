@@ -1,6 +1,7 @@
-import 'dart:io';
+//import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 class AdaptiveScaffold extends StatelessWidget {
@@ -19,26 +20,41 @@ class AdaptiveScaffold extends StatelessWidget {
       this.drawer,
       this.bottomNavigationBar});
 
+  PreferredSizeWidget getAppBar() {
+    if (kIsWeb) {
+      return AppBar(
+        title: Text(
+          title,
+        ),
+        actions: actions,
+      );
+    }
+
+    // if (Platform.isIOS) {
+    //   return CupertinoNavigationBar(
+    //     middle: Text(
+    //       title,
+    //     ),
+    //     trailing: Row(
+    //       mainAxisSize: MainAxisSize.min,
+    //       children: actions,
+    //     ),
+    //   );
+    // }
+
+    return AppBar(
+      title: Text(
+        title,
+      ),
+      actions: actions,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
 
-    final PreferredSizeWidget appBar = Platform.isIOS
-        ? CupertinoNavigationBar(
-            middle: Text(
-              title,
-            ),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: actions,
-            ),
-          )
-        : AppBar(
-            title: Text(
-              title,
-            ),
-            actions: actions,
-          );
+    final PreferredSizeWidget appBar = getAppBar();
 
     //SafeArea is basically a glorified Padding widget.
     // If you wrap another widget with SafeArea , it adds any necessary
@@ -54,24 +70,41 @@ class AdaptiveScaffold extends StatelessWidget {
       ),
     );
 
-    return Platform.isIOS
-        ? CupertinoPageScaffold(
-            child: pageBody,
-            navigationBar: appBar,
-          )
-        : Scaffold(
-            appBar: appBar,
-            body: pageBody,
-            bottomNavigationBar: this.bottomNavigationBar,
-            drawer: this.drawer,
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
-            floatingActionButton: Platform.isIOS
-                ? Container()
-                : FloatingActionButton(
-                    child: Icon(Icons.add),
-                    onPressed: () => centerButtonAction(),
-                  ),
-          );
+    Widget getScaffold() {
+      if (kIsWeb) {
+        return Scaffold(
+          appBar: appBar,
+          body: pageBody,
+          bottomNavigationBar: this.bottomNavigationBar,
+          drawer: this.drawer,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () => centerButtonAction(),
+          ),
+        );
+      }
+
+      // if (Platform.isIOS)
+      //   return CupertinoPageScaffold(
+      //     child: pageBody,
+      //     navigationBar: appBar,
+      //   );
+
+      return Scaffold(
+        appBar: appBar,
+        body: pageBody,
+        bottomNavigationBar: this.bottomNavigationBar,
+        drawer: this.drawer,
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () => centerButtonAction(),
+        ),
+      );
+    }
+
+    return getScaffold();
   }
 }
