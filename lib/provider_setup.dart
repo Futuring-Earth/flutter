@@ -11,18 +11,18 @@ import './core/services/http_based/http_service.dart';
 import './core/view_models/activity/activity_viewmodel.dart';
 import './core/view_models/challenges/challenge_viewmodel.dart';
 
-import 'package:app/core/services/auth/apple_sign_in_available.dart';
+// import 'package:app/core/services/auth/apple_sign_in_available.dart';
 import 'package:app/core/services/auth/auth_service.dart';
 import 'package:app/core/services/auth/auth_service_adapter.dart';
 import 'package:app/core/services/auth/firebase_email_link_handler.dart';
 import 'package:app/core/services/auth/email_secure_store.dart';
 
 class InitialProviderSetup {
-  InitialProviderSetup(
-      {this.initialAuthServiceType = AuthServiceType.firebase,
-      this.appleSignInAvailable});
+  InitialProviderSetup({this.initialAuthServiceType = AuthServiceType.firebase
+      // ,this.appleSignInAvailable
+      });
   final AuthServiceType initialAuthServiceType;
-  final AppleSignInAvailable appleSignInAvailable;
+  // final AppleSignInAvailable appleSignInAvailable;
 
   List<SingleChildCloneableWidget> get providers {
     return [
@@ -40,7 +40,7 @@ class InitialProviderSetup {
       Provider<ImagePickerService>(
         create: (_) => ImagePickerService(),
       ),
-      Provider<AppleSignInAvailable>.value(value: appleSignInAvailable),
+      // Provider<AppleSignInAvailable>.value(value: appleSignInAvailable),
       Provider<AuthService>(
         create: (_) => AuthServiceAdapter(
           initialAuthServiceType: initialAuthServiceType,

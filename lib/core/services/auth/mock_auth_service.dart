@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:app/core/models/user.dart';
-import 'package:apple_sign_in/apple_sign_in.dart';
+// import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:app/core/services/auth/auth_service.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
@@ -133,13 +133,13 @@ class MockAuthService implements AuthService {
     return user;
   }
 
-  @override
-  Future<User> signInWithApple({List<Scope> scopes}) async {
-    await Future<void>.delayed(responseTime);
-    final User user = User(uid: random.randomAlphaNumeric(32));
-    _add(user);
-    return user;
-  }
+  // @override
+  // Future<User> signInWithApple({List<Scope> scopes}) async {
+  //   await Future<void>.delayed(responseTime);
+  //   final User user = User(uid: random.randomAlphaNumeric(32));
+  //   _add(user);
+  //   return user;
+  // }
 
   @override
   void dispose() {

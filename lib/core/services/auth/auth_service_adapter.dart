@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:app/core/models/user.dart';
 import 'package:app/core/services/user_handler.dart';
-import 'package:apple_sign_in/apple_sign_in.dart';
+// import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:app/core/services/auth/auth_service.dart';
 import 'package:app/core/services/auth/firebase_auth_service.dart';
 import 'package:app/core/services/auth/mock_auth_service.dart';
@@ -121,9 +121,9 @@ class AuthServiceAdapter implements AuthService {
   @override
   Future<User> signInWithGoogle() => authService.signInWithGoogle();
 
-  @override
-  Future<User> signInWithApple({List<Scope> scopes}) =>
-      authService.signInWithApple();
+  // @override
+  // Future<User> signInWithApple({List<Scope> scopes}) =>
+  //     authService.signInWithApple();
 
   @override
   Future<void> signOut() => authService.signOut();

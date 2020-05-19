@@ -1,4 +1,4 @@
-import 'package:app/core/services/auth/apple_sign_in_available.dart';
+// import 'package:app/core/services/auth/apple_sign_in_available.dart';
 import 'package:app/core/services/auth/auth_service_adapter.dart';
 import 'package:app/ui/views/auth_widget.dart';
 import 'package:app/ui/views/auth_widget_builder.dart';
@@ -19,29 +19,30 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]);
   setupLocator();
-  final appleSignInAvailable = await AppleSignInAvailable.check();
-  runApp(MyApp(appleSignInAvailable: appleSignInAvailable));
+  // final appleSignInAvailable = await AppleSignInAvailable.check();
+  // runApp(MyApp(appleSignInAvailable: appleSignInAvailable));
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp(
-      {this.initialAuthServiceType = AuthServiceType.firebase,
-      this.appleSignInAvailable});
+  const MyApp({this.initialAuthServiceType = AuthServiceType.firebase
+      //,this.appleSignInAvailable
+      });
   final AuthServiceType initialAuthServiceType;
-  final AppleSignInAvailable appleSignInAvailable;
+  // final AppleSignInAvailable appleSignInAvailable;
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: InitialProviderSetup(
-              initialAuthServiceType: this.initialAuthServiceType,
-              appleSignInAvailable: this.appleSignInAvailable)
+              initialAuthServiceType: this.initialAuthServiceType)
+          // ,appleSignInAvailable: this.appleSignInAvailable)
           .providers,
       child: AuthWidgetBuilder(
           builder: (BuildContext context, AsyncSnapshot<User> userSnapshot) {
         return MaterialApp(
           //navigatorKey: NavigationService.instance.navigatorKey,
-          initialRoute: '/',  // this is equal to the widget defined as 'home'
+          initialRoute: '/', // this is equal to the widget defined as 'home'
           theme: FuturingSettings.globalTheme,
           home: EmailLinkErrorPresenter.create(
             context,
