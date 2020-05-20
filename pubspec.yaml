@@ -25,22 +25,13 @@ dependencies:
   shared_preferences: ^0.5.3+1
   get_it: ^4.0.2
   path: ^1.7.0
-  image_picker: ^0.6.5+3
-  path_provider: ^1.6.7
   firebase_auth: ^0.16.0
   flutter_facebook_login: ^3.0.0
   google_sign_in: ^4.4.4
-  # apple_sign_in: ^0.1.0
-  flutter_secure_storage: ^3.3.1+1
   random_string: ^2.0.0
-  firebase_dynamic_links: ^0.5.0+9
   rxdart: ^0.23.1
-  package_info: ^0.4.0+13
   cloud_firestore: ^0.13.5
-  firebase_storage: ^3.1.5
   fluttertoast: ^4.0.1
-  cached_network_image: ^2.2.0+1
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
@@ -48,6 +39,26 @@ dependencies:
   timeago: ^2.0.26
   firebase_analytics: ^5.0.11
   flutter_spinkit: ^4.1.2+1
+
+  #only Android and iOS
+  #----------------------
+  #path_provider: ^1.6.7
+  # apple_sign_in: ^0.1.0
+    #TODO: Implemente an http based alternative for accessing the firebase storage
+  firebase_storage: ^3.1.5 #https://stackoverflow.com/questions/59716944/flutter-web-upload-image-file-to-firebase-storage
+    #Use for image picking
+  image_picker: ^0.6.5+3
+  cached_network_image: ^2.2.0+1
+    #used for email link sign-up
+  firebase_dynamic_links: ^0.5.0+9
+  package_info: ^0.4.0+13
+  flutter_secure_storage: ^3.3.1+1
+  #----------------------
+
+  
+
+
+
 
 
 dev_dependencies:
@@ -95,7 +106,7 @@ flutter:
     - assets/images/fb-logo.png
     - assets/images/go-logo.png
     - assets/images/user.png
-    - assets/images/.
+  #  - assets/images/.
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

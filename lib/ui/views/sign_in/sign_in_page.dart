@@ -168,23 +168,26 @@ class SignInPage extends StatelessWidget {
             //   ),
             //   SizedBox(height: 8),
             // ],
-            SocialSignInButton(
-              key: googleButtonKey,
-              assetName: 'go-logo.png',
-              text: Strings.signInWithGoogle,
-              onPressed: isLoading ? null : () => _signInWithGoogle(context),
-              color: Colors.white,
-            ),
-            SizedBox(height: 8),
-            SocialSignInButton(
-              key: facebookButtonKey,
-              assetName: 'fb-logo.png',
-              text: Strings.signInWithFacebook,
-              textColor: Colors.white,
-              onPressed: isLoading ? null : () => _signInWithFacebook(context),
-              color: Color(0xFF334D92),
-            ),
-            SizedBox(height: 8),
+            if (!kIsWeb) ...[
+              SocialSignInButton(
+                key: googleButtonKey,
+                assetName: 'assets/images/go-logo.png',
+                text: Strings.signInWithGoogle,
+                onPressed: isLoading ? null : () => _signInWithGoogle(context),
+                color: Colors.white,
+              ),
+              SizedBox(height: 8),
+              SocialSignInButton(
+                key: facebookButtonKey,
+                assetName: 'assets/images/fb-logo.png',
+                text: Strings.signInWithFacebook,
+                textColor: Colors.white,
+                onPressed:
+                    isLoading ? null : () => _signInWithFacebook(context),
+                color: Color(0xFF334D92),
+              ),
+              SizedBox(height: 8)
+            ],
             SignInButton(
               key: emailPasswordButtonKey,
               text: Strings.signInWithEmailPassword,
@@ -194,14 +197,19 @@ class SignInPage extends StatelessWidget {
               color: Colors.teal[700],
             ),
             SizedBox(height: 8),
-            SignInButton(
-              key: emailLinkButtonKey,
-              text: Strings.signInWithEmailLink,
-              onPressed: isLoading ? null : () => _signInWithEmailLink(context),
-              textColor: Colors.white,
-              color: Colors.blueGrey[700],
-            ),
-            SizedBox(height: 8),
+
+            //not an option when loging from the website
+            if (!kIsWeb) ...[
+              SignInButton(
+                key: emailLinkButtonKey,
+                text: Strings.signInWithEmailLink,
+                onPressed:
+                    isLoading ? null : () => _signInWithEmailLink(context),
+                textColor: Colors.white,
+                color: Colors.blueGrey[700],
+              ),
+              SizedBox(height: 8)
+            ],
             Text(
               Strings.or,
               style: TextStyle(fontSize: 14.0, color: Colors.black87),

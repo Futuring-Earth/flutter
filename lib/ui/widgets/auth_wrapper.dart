@@ -29,7 +29,6 @@ class AuthWrapper extends StatelessWidget {
         future: _getUserToDisplayId(ctx),
         builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
           if (snapshot.hasData) {
-            print('user: ${snapshot.data.uid.toString()}');
             return this.innerWidget(context, snapshot.data, height, width);
           } else {
             return SpinKitWanderingCubes(

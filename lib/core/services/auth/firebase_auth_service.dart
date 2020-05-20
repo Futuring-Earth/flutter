@@ -179,11 +179,17 @@ class FirebaseAuthService implements AuthService {
 
   @override
   Future<void> signOut() async {
-    final GoogleSignIn googleSignIn = GoogleSignIn();
-    await googleSignIn.signOut();
-    final FacebookLogin facebookLogin = FacebookLogin();
-    await facebookLogin.logOut();
-    return _firebaseAuth.signOut();
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      await googleSignIn.signOut();
+    } finally {
+      try {
+        final FacebookLogin facebookLogin = FacebookLogin();
+        await facebookLogin.logOut();
+      } finally {
+        _firebaseAuth.signOut();
+      }
+    }
   }
 
   @override

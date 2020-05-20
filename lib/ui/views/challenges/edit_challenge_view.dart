@@ -284,7 +284,7 @@ class _EditChallengeViewState extends State<EditChallengesView> {
                             overallRaiting: _editedChallenge.overallRaiting);
                       },
                     ),
-                    ImageInput(_selectImage),
+                    if (!kIsWeb) ...[ImageInput(_selectImage)],
                   ],
                 ),
               ),

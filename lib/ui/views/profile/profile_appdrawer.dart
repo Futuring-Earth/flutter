@@ -86,8 +86,7 @@ class ProfileDrawer extends StatelessWidget {
           ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text('Logout'),
-              onTap: () => _confirmSignOut(context)
-              ),
+              onTap: () => _confirmSignOut(context)),
         ],
       ),
     );
