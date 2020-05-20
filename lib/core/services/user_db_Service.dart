@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 abstract class UserDBService {
   Future<void> setUser(User user);
   Future<void> deleteUser(User user);
-  Stream<List<User>> usersStream();
+  Stream<List<User>> usersStream({String searchText});
   Stream<User> userStream({@required String userId});
 }
 
@@ -19,17 +19,15 @@ class FirestoreUserDBService implements UserDBService {
   // final String uid;
   // final _service = FirestoreService.instance;
   FirestoreService _service;
-  
+
   static final FirestoreUserDBService instance = FirestoreUserDBService._();
 
-  FirestoreUserDBService._()
-  {
+  FirestoreUserDBService._() {
     _service = FirestoreService.instance;
   }
 
   @override
-  Future<void> setUser(User user) async =>
-      await _service.setData(
+  Future<void> setUser(User user) async => await _service.setData(
         path: APIPath.user(user.id),
         data: user.toJson(),
       );
@@ -40,17 +38,21 @@ class FirestoreUserDBService implements UserDBService {
   }
 
   @override
-  Stream<User> userStream({@required String userId}) =>
-      _service.documentStream(
+  Stream<User> userStream({@required String userId}) => _service.documentStream(
         path: APIPath.user(userId),
-        builder: (data, documentId) =>
-            User.fromJson(data), //, documentId),
+        builder: (data, documentId) => User.fromJson(data), //, documentId),
       );
 
   @override
-  Stream<List<User>> usersStream() => _service.collectionStream(
+  Stream<List<User>> usersStream({String searchText}) =>
+      _service.collectionStream(
         path: APIPath.users(),
-        builder: (data, documentId) =>
-            User.fromJson(data), //, documentId),
+        builder: (data, documentId) => User.fromJson(data), //, documentId),
+        queryBuilder: (searchText != null && searchText != '')
+            ? (query) => query
+                .where('displayName', isGreaterThanOrEqualTo: searchText)
+                .where(query, isLessThan: searchText + 'z')
+            : null,
+        sort: (lhs, rhs) => rhs.displayName.compareTo(lhs.displayName),
       );
 }

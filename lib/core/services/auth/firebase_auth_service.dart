@@ -1,4 +1,6 @@
+import 'package:app/constants/global_settings.dart';
 import 'package:app/core/models/user.dart';
+import 'package:app/core/services/firestore_service.dart';
 //import 'package:apple_sign_in/apple_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:app/core/services/auth/auth_service.dart';
@@ -11,9 +13,17 @@ class FirebaseAuthService implements AuthService {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   User _userFromFirebase(FirebaseUser user) {
+    final _service = FirestoreService.instance;
     if (user == null) {
       return null;
     }
+
+    if (user?.uid != null) {
+      _service.updateData(
+          path: APIPath.user(user.uid),
+          data: {"lastSeen": DateTime.now().toUtc()});
+    }
+
     return User(
       uid: user.uid,
       email: user.email,

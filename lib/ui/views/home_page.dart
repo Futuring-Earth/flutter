@@ -1,4 +1,4 @@
-import 'package:app/ui/views/chat/recent_conversationSnippets_view.dart';
+import 'package:app/ui/views/chat/search_page.dart';
 import 'package:app/ui/views/inspiration/inspiration_view.dart';
 import 'package:app/ui/views/challenges/challenges_view.dart';
 import 'package:flutter/material.dart';
@@ -66,9 +66,7 @@ class _HomePageState extends State<HomePage> {
         IconButton(
           icon: const Icon(Icons.chat_bubble_outline),
           onPressed: () {
-            print('navigate to ${RecentConversationSnippetsView.routeName}');
-            Navigator.of(context)
-                .pushNamed(RecentConversationSnippetsView.routeName);
+            Navigator.of(context).pushNamed(SearchPage.routeName);
           },
         )
       ],

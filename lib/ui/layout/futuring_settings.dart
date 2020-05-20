@@ -1,4 +1,5 @@
 import 'package:app/ui/views/chat/recent_conversationSnippets_view.dart';
+import 'package:app/ui/views/chat/search_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/ui/views/activity/activity_view.dart';
@@ -48,6 +49,7 @@ class FuturingSettings {
       EditChallengesView.routeName: (ctx) => EditChallengesView(),
       RecentConversationSnippetsView.routeName: (ctx) =>
           RecentConversationSnippetsView(),
+      SearchPage.routeName: (ctx) => SearchPage(),
       //AuthWidget.routeName: (ctx) => AuthWidget(userSnapshot: userSnapshot),
       // '/': (ctx) => EmailLinkErrorPresenter.create(
       //       ctx,

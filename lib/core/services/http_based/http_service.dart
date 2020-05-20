@@ -29,7 +29,7 @@ class HttpService implements DatabaseService {
       final filterString =
           filterByUser ? 'orderBy="creatorId"&equalTo="${this._userId}"' : '';
       final url =
-          'https://test-f0d3f.firebaseio.com/$tableName.json?auth=${this._authToken}&$filterString';
+          'https://sharedkarma.firebaseio.com/$tableName.json?auth=${this._authToken}&$filterString';
       final response = await http.get(url);
 
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
@@ -57,7 +57,7 @@ class HttpService implements DatabaseService {
       T item, String tableName, ItemCreator<T> creator) async {
     try {
       final url =
-          'https://test-f0d3f.firebaseio.com/$tableName.json?auth=${this._authToken}';
+          'https://sharedkarma.firebaseio.com/$tableName.json?auth=${this._authToken}';
       final response = await http.post(url, body: json.encode(item.toJson()));
       final extractedData = json.decode(response.body) as Map<String, dynamic>;
 
@@ -79,7 +79,7 @@ class HttpService implements DatabaseService {
       T newItem, String tableName) async {
     try {
       final url =
-          'https://test-f0d3f.firebaseio.com/$tableName/${newItem.id}}.json?auth=${this._authToken}';
+          'https://sharedkarma.firebaseio.com/$tableName/${newItem.id}}.json?auth=${this._authToken}';
       var response = await http.patch(url, body: json.encode(newItem.toJson()));
       if (response.statusCode >= 400)
         return false;
@@ -93,7 +93,7 @@ class HttpService implements DatabaseService {
   @override
   Future<void> deleteItem(String id, String label, String tableName) async {
     final url =
-        'https://test-f0d3f.firebaseio.com/$tableName/$id.json?auth=${this._authToken}';
+        'https://sharedkarma.firebaseio.com/$tableName/$id.json?auth=${this._authToken}';
     final response = await http.delete(url);
     if (response.statusCode >= 400) {
       throw HttpException('Could not delete product.');

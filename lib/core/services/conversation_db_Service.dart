@@ -30,7 +30,7 @@ class FirestoreConversationDBService implements ConversationDBService {
   }
 
   @override
-  Future<void> setConversation(Conversation conversation) async =>
+  Future<String> setConversation(Conversation conversation) async =>
       await _service.setData(
         path: APIPath.conversations(),
         data: conversation.toJson(),
@@ -79,4 +79,33 @@ class FirestoreConversationDBService implements ConversationDBService {
         builder: (data, documentId) =>
             Conversation.fromJson(data), //, documentId),
       );
+
+  Future<void> createOrGetConversartion(String _currentID, String _recepientID,
+      Future<void> _onSuccess(String _conversationID)) async {
+    try {
+      final Conversation conversationInDb =
+          await _service.documentById<Conversation>(
+        path: APIPath.conversationsByUser(_currentID),
+        builder: (data, documentId) =>
+            Conversation.fromJson(data), //, documentId),
+      );
+
+      if (conversationInDb != null) {
+        return _onSuccess(conversationInDb.id);
+      } else {
+        Conversation newConversation = Conversation.fromJson({
+          "members": [_currentID, _recepientID],
+          "ownerID": _currentID,
+          'messages': [],
+        });
+
+        String documentId = await setConversation(newConversation);
+
+        return _onSuccess(documentId);
+      }
+    } catch (e) {
+      print(e);
+    }
+    return;
+  }
 }

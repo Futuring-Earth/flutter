@@ -14,4 +14,7 @@ class APIPath {
   static String conversationSnippets(String uid) => 'users/$uid/conversations';
   static String conversation(String objectId) => 'conversations/$objectId';
   static String conversations() => 'conversations';
+  static String conversationByUser(String uid, String objectId) =>
+      'users/$uid/conversations/$objectId';
+  static String conversationsByUser(String uid) => 'users/$uid/conversations';
 }
