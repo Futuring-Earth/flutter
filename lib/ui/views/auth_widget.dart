@@ -1,5 +1,5 @@
 import 'package:app/core/models/user.dart';
-import 'package:app/ui/views/home_page.dart';
+import 'package:app/ui/views/main_tab_view.dart';
 
 import 'package:app/ui/views/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class AuthWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (userSnapshot.connectionState == ConnectionState.active) {
-      return userSnapshot.hasData ? HomePage() : SignInPageBuilder();
+      return userSnapshot.hasData ? MainTabView() : SignInPageBuilder();
     }
     return Scaffold(
       body: Center(

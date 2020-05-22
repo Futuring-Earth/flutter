@@ -1,12 +1,10 @@
 // import 'package:app/core/services/auth/apple_sign_in_available.dart';
 import 'package:app/core/services/auth/auth_service_adapter.dart';
-import 'package:app/ui/views/auth_widget.dart';
 import 'package:app/ui/views/auth_widget_builder.dart';
-import 'package:app/ui/views/email_link_error_presenter.dart';
+import 'package:app/ui/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
 import './provider_setup.dart';
 import './locator.dart';
 import './ui/layout/futuring_settings.dart';
@@ -42,13 +40,17 @@ class MyApp extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot<User> userSnapshot) {
         return MaterialApp(
           //navigatorKey: NavigationService.instance.navigatorKey,
-          initialRoute: '/', // this is equal to the widget defined as 'home'
+          //navigatorKey: locator<CustomNavigationService>().navigatorKey,
+          initialRoute:
+              '/', //Routes.homeViewRoute, //'/', // this is equal to the widget defined as 'home'
           theme: FuturingSettings.globalTheme,
-          home: EmailLinkErrorPresenter.create(
-            context,
-            child: AuthWidget(userSnapshot: userSnapshot),
-          ),
+          home: HomeView(userSnapshot: userSnapshot),
+          // EmailLinkErrorPresenter.create(
+          //   context,
+          //   child: AuthWidget(userSnapshot: userSnapshot),
+          // ),
           routes: FuturingSettings.getGlobalRoutes(context),
+          //onGenerateRoute: Router().onGenerateRoute,
         );
       }),
 

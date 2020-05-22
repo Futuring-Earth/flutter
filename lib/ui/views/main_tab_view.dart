@@ -9,12 +9,12 @@ import '../widgets/adaptive_scaffold.dart';
 import '../views/challenges/edit_challenge_view.dart';
 import 'profile/profile_appdrawer.dart';
 
-class HomePage extends StatefulWidget {
+class MainTabView extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _MainTabViewState createState() => _MainTabViewState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _MainTabViewState extends State<MainTabView> {
   List<Map<String, Object>> _pages;
   int _selectedPageIndex = 0;
 
@@ -67,6 +67,8 @@ class _HomePageState extends State<HomePage> {
           icon: const Icon(Icons.chat_bubble_outline),
           onPressed: () {
             Navigator.of(context).pushNamed(SearchPage.routeName);
+            //ExtendedNavigator.of(context).pushNamed(Routes.searchPageRoute);
+            //CustomNavigationService.instance.pushNamed(Routes.searchPageRoute);
           },
         )
       ],
