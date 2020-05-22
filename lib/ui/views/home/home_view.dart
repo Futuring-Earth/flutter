@@ -1,18 +1,17 @@
-import 'package:app/core/models/user.dart';
-import 'package:app/ui/views/home/auth_widget.dart';
-import 'package:app/ui/views/home/email_link_error_presenter.dart';
+import 'package:app/ui/views/home/home_view_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 class HomeView extends StatelessWidget {
-  final AsyncSnapshot<User> userSnapshot;
-
-  const HomeView({this.userSnapshot, Key key}) : super(key: key);
+  const HomeView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return EmailLinkErrorPresenter.create(
-      context,
-      child: AuthWidget(userSnapshot: userSnapshot),
+    return Container(
+      child: ScreenTypeLayout(
+        tablet: HomeViewMobile(),
+        mobile: HomeViewMobile(),
+      ), //.showCursorOnHover.moveUpOnHover,
     );
   }
 }

@@ -8,12 +8,12 @@ import 'package:app/ui/views/profile/profile_view.dart';
 import 'package:app/ui/widgets/adaptive_scaffold.dart';
 import 'package:flutter/material.dart';
 
-class MainTabView extends StatefulWidget {
+class HomeViewMobile extends StatefulWidget {
   @override
-  _MainTabViewState createState() => _MainTabViewState();
+  _HomeViewMobileState createState() => _HomeViewMobileState();
 }
 
-class _MainTabViewState extends State<MainTabView> {
+class _HomeViewMobileState extends State<HomeViewMobile> {
   List<Map<String, Object>> _pages;
   int _selectedPageIndex = 0;
 

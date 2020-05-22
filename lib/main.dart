@@ -1,7 +1,7 @@
 // import 'package:app/core/services/auth/apple_sign_in_available.dart';
 import 'package:app/core/services/auth/auth_service_adapter.dart';
-import 'package:app/ui/views/auth_widget_builder.dart';
-import 'package:app/ui/views/home_view.dart';
+import 'package:app/ui/views/home/auth_widget_builder.dart';
+import 'package:app/ui/views/home/auth_home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
           initialRoute:
               '/', //Routes.homeViewRoute, //'/', // this is equal to the widget defined as 'home'
           theme: FuturingSettings.globalTheme,
-          home: HomeView(userSnapshot: userSnapshot),
+          home: AuthHomeView(userSnapshot: userSnapshot),
           // EmailLinkErrorPresenter.create(
           //   context,
           //   child: AuthWidget(userSnapshot: userSnapshot),

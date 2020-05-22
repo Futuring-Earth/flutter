@@ -7,7 +7,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:app/ui/views/home_view.dart';
+import 'package:app/ui/views/home/auth_home_view.dart';
 import 'package:app/core/models/user.dart';
 import 'package:app/ui/views/profile/profile_view.dart';
 import 'package:app/ui/views/activity/activity_view.dart';
@@ -60,7 +60,7 @@ class Router extends RouterBase {
         }
         final typedArgs = args as HomeViewArguments ?? HomeViewArguments();
         return MaterialPageRoute<dynamic>(
-          builder: (context) => HomeView(
+          builder: (context) => AuthHomeView(
               userSnapshot: typedArgs.userSnapshot, key: typedArgs.key),
           settings: settings,
         );
