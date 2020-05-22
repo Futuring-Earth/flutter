@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:injectable/injectable.dart';
 
 import '../../models/base-model.dart';
 import '../../models/http_exception.dart';
 import './database_service.dart';
 import 'package:app/helpers/item_creator.dart';
 
+@lazySingleton
 class HttpService implements DatabaseService {
   String _userId;
   String _authToken;

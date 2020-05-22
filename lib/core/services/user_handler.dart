@@ -1,8 +1,10 @@
 import 'package:app/constants/global_settings.dart';
 import 'package:app/core/models/user.dart';
 import 'package:app/core/services/firestore_service.dart';
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+@lazySingleton
 class UserHandler {
   UserHandler({this.currentUser});
   final User currentUser;

@@ -1,8 +1,10 @@
 import 'dart:io';
 
+import 'package:injectable/injectable.dart';
 import 'package:path/path.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
+@lazySingleton
 class CloudStorageService {
   static CloudStorageService instance = CloudStorageService();
 

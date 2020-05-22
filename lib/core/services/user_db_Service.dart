@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:app/constants/global_settings.dart';
 import 'package:app/core/models/user.dart';
 import 'package:app/core/services/firestore_service.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
 abstract class UserDBService {
@@ -14,6 +15,7 @@ abstract class UserDBService {
 
 String documentIdFromCurrentDate() => DateTime.now().toIso8601String();
 
+@lazySingleton
 class FirestoreUserDBService implements UserDBService {
   // FirestoreUserDBService({@required this.uid}) : assert(uid != null);
   // final String uid;

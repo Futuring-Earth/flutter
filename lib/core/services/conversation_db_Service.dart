@@ -4,8 +4,10 @@ import 'package:app/constants/global_settings.dart';
 import 'package:app/core/models/conversation.dart';
 import 'package:app/core/models/message.dart';
 import 'package:app/core/services/firestore_service.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
+@lazySingleton
 abstract class ConversationDBService {
   Future<void> setConversation(Conversation conversation);
   Future<void> sendMessage(String conversationId, Message message);

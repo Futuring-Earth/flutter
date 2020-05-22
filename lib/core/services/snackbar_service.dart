@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:injectable/injectable.dart';
 
+@lazySingleton
 class SnackBarService {
   BuildContext _buildContext;
 

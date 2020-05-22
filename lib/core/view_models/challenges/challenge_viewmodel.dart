@@ -8,6 +8,7 @@ class ChallengeViewModel with ChangeNotifier {
   String _authToken;
   final BuildContext ctx;
   ChallengeGraphService dbService;
+  //final dbService = locator<ChallengeGraphService>();
 
   // String _userId;
   List<Challenge> _challenges = [];

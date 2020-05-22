@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:app/constants/global_settings.dart';
 import 'package:app/core/models/conversationsnippet.dart';
 import 'package:app/core/services/firestore_service.dart';
+import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 
+@lazySingleton
 abstract class ConversationSnippetDBService {
   Future<void> setConversationSnippet(
       String userId, ConversationSnippet conversationSnippet);
