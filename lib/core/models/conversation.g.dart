@@ -7,8 +7,7 @@ part of 'conversation.dart';
 // **************************************************************************
 
 Conversation _$ConversationFromJson(Map<String, dynamic> json) {
-  $checkKeys(json,
-      requiredKeys: const ['id', 'members', 'messages', 'ownerID']);
+  $checkKeys(json, requiredKeys: const ['members', 'messages', 'ownerID']);
   return Conversation(
     id: json['id'] as String,
     members: json['members'] as List,

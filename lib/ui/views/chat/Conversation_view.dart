@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:app/core/models/conversation.dart';
 import 'package:app/core/models/message.dart';
 import 'package:app/core/models/user.dart';
@@ -95,13 +93,13 @@ class _ConversationViewState extends State<ConversationView> {
         stream: FirestoreConversationDBService.instance
             .conversationStream(conversationId: this.widget._conversationID),
         builder: (BuildContext _context, _snapshot) {
-          Timer(
-            Duration(milliseconds: 50),
-            () => {
-              _listViewController
-                  .jumpTo(_listViewController.position.maxScrollExtent),
-            },
-          );
+          // Timer(
+          //   Duration(milliseconds: 50),
+          //   () => {
+          //     _listViewController
+          //         .jumpTo(_listViewController.position.maxScrollExtent),
+          //   },
+          // );
           var _conversationData = _snapshot.data;
           if (_conversationData != null) {
             if (_conversationData.messages.length != 0) {

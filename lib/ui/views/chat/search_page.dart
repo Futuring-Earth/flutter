@@ -157,16 +157,19 @@ class _SearchPageState extends State<SearchPage> {
                           );
                         });
                       },
-                      title: Text(_userData.displayName),
+                      title: Text((_userData.displayName == null)
+                          ? 'Anonymous'
+                          : _userData.displayName),
                       leading: Container(
                         width: 50,
                         height: 50,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(100),
                           image: DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(_userData.photoUrl),
-                          ),
+                              fit: BoxFit.cover,
+                              image: NetworkImage((_userData.photoUrl != null)
+                                  ? _userData.photoUrl
+                                  : '')),
                         ),
                       ),
                       trailing: Column(

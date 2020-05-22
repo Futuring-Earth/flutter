@@ -18,7 +18,7 @@ class Conversation extends BaseModel {
       {@required this.id, this.members, this.messages, this.ownerID})
       : super(id: id, label: 'Conversation');
 
-  @JsonKey(name: 'id', ignore: false, required: true, defaultValue: null)
+  @JsonKey(name: 'id', ignore: false, required: false, defaultValue: null)
   final String id;
   @JsonKey(name: 'members', ignore: false, required: true, defaultValue: null)
   final List members;
@@ -35,7 +35,6 @@ class Conversation extends BaseModel {
   Map<String, dynamic> toJson() {
     //update the lastSeen value to DateTime.now().toUtc()
     Map<String, dynamic> jsonConversation = _$ConversationToJson(this);
-    jsonConversation.update('lastSeen', (value) => DateTime.now().toUtc());
     return jsonConversation;
   }
 }

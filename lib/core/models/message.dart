@@ -49,7 +49,6 @@ class Message extends BaseModel {
   Map<String, dynamic> toJson() {
     //update the lastSeen value to DateTime.now().toUtc()
     Map<String, dynamic> jsonMessage = _$MessageToJson(this);
-    jsonMessage.update('lastSeen', (value) => DateTime.now().toUtc());
     return jsonMessage;
   }
 }

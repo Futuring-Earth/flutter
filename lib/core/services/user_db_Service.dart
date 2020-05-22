@@ -53,6 +53,10 @@ class FirestoreUserDBService implements UserDBService {
                 .where('displayName', isGreaterThanOrEqualTo: searchText)
                 .where(query, isLessThan: searchText + 'z')
             : null,
-        sort: (lhs, rhs) => rhs.displayName.compareTo(lhs.displayName),
+        sort: (lhs, rhs) {
+          if (lhs.displayName == null) return -1;
+          if (rhs.displayName == null) return 1;
+          return rhs.displayName.compareTo(lhs.displayName);
+        },
       );
 }

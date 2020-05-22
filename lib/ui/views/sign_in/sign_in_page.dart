@@ -168,15 +168,15 @@ class SignInPage extends StatelessWidget {
             //   ),
             //   SizedBox(height: 8),
             // ],
+            SocialSignInButton(
+              key: googleButtonKey,
+              assetName: 'assets/images/go-logo.png',
+              text: Strings.signInWithGoogle,
+              onPressed: isLoading ? null : () => _signInWithGoogle(context),
+              color: Colors.white,
+            ),
+            SizedBox(height: 8),
             if (!kIsWeb) ...[
-              SocialSignInButton(
-                key: googleButtonKey,
-                assetName: 'assets/images/go-logo.png',
-                text: Strings.signInWithGoogle,
-                onPressed: isLoading ? null : () => _signInWithGoogle(context),
-                color: Colors.white,
-              ),
-              SizedBox(height: 8),
               SocialSignInButton(
                 key: facebookButtonKey,
                 assetName: 'assets/images/fb-logo.png',

@@ -65,8 +65,6 @@ class ConversationSnippet extends BaseModel {
     //update the lastSeen value to DateTime.now().toUtc()
     Map<String, dynamic> jsonConversationSnippet =
         _$ConversationSnippetToJson(this);
-    jsonConversationSnippet.update(
-        'lastSeen', (value) => DateTime.now().toUtc());
     return jsonConversationSnippet;
   }
 }
