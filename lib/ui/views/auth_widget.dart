@@ -3,6 +3,7 @@ import 'package:app/ui/views/main_tab_view.dart';
 
 import 'package:app/ui/views/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 /// Builds the signed-in or non signed-in UI, depending on the user snapshot.
 /// This widget should be below the [MaterialApp].
@@ -20,7 +21,10 @@ class AuthWidget extends StatelessWidget {
     }
     return Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: SpinKitFadingCircle(
+          color: Colors.blue,
+          size: 50.0,
+        ),
       ),
     );
   }

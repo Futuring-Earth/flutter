@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:app/ui/widgets/image_input.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/models/challenge.dart';
@@ -187,7 +188,10 @@ class _EditChallengeViewState extends State<EditChallengesView> {
       ),
       body: _isLoading
           ? Center(
-              child: CircularProgressIndicator(),
+              child: SpinKitFadingCircle(
+                color: Colors.blue,
+                size: 50.0,
+              ),
             )
           : Padding(
               padding: const EdgeInsets.all(16.0),

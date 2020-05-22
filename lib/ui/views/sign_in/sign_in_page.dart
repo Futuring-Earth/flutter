@@ -12,6 +12,7 @@ import 'package:app/core/services/auth/auth_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 class SignInPageBuilder extends StatelessWidget {
@@ -133,7 +134,10 @@ class SignInPage extends StatelessWidget {
   Widget _buildHeader() {
     if (isLoading) {
       return Center(
-        child: CircularProgressIndicator(),
+        child: SpinKitFadingCircle(
+          color: Colors.blue,
+          size: 50.0,
+        ),
       );
     }
     return Text(

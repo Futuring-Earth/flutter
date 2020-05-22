@@ -58,7 +58,7 @@ class _ConversationViewState extends State<ConversationView> {
             _user = snapshot.data;
             return _conversationPageUI();
           } else {
-            return SpinKitWanderingCubes(
+            return SpinKitFadingCircle(
               color: Theme.of(context).accentColor,
               size: 50.0,
             );
@@ -120,7 +120,7 @@ class _ConversationViewState extends State<ConversationView> {
               );
             }
           } else {
-            return SpinKitWanderingCubes(
+            return SpinKitFadingCircle(
               color: Colors.blue,
               size: 50.0,
             );

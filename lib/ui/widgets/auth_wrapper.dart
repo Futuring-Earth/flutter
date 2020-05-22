@@ -31,7 +31,7 @@ class AuthWrapper extends StatelessWidget {
           if (snapshot.hasData) {
             return this.innerWidget(context, snapshot.data, height, width);
           } else {
-            return SpinKitWanderingCubes(
+            return SpinKitFadingCircle(
               color: Theme.of(ctx).accentColor,
               size: 50.0,
             );

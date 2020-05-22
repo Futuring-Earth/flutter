@@ -98,7 +98,7 @@ class RecentConversationSnippetsView extends StatelessWidget {
                         ),
                       );
               } else {
-                return SpinKitWanderingCubes(
+                return SpinKitFadingCircle(
                   color: Colors.blue,
                   size: 50.0,
                 );

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/models/http_exception.dart';
@@ -302,7 +303,10 @@ class _AuthCardState extends State<AuthCard>
                   height: 20,
                 ),
                 if (_isLoading)
-                  CircularProgressIndicator()
+                  SpinKitFadingCircle(
+                    color: Colors.blue,
+                    size: 50.0,
+                  )
                 else
                   RaisedButton(
                     child:

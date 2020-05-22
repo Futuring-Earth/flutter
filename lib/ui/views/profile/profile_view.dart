@@ -57,7 +57,7 @@ class ProfileView extends StatelessWidget {
                     ),
                   ),
                 )
-              : SpinKitWanderingCubes(
+              : SpinKitFadingCircle(
                   color: Theme.of(ctx).accentColor,
                   size: 50.0,
                 );

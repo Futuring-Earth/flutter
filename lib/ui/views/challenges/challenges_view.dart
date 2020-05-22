@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
 import '../../../core/view_models/challenges/challenge_viewmodel.dart';
@@ -21,7 +22,10 @@ class ChallengesView extends StatelessWidget {
         builder: (ctx, snapshot) =>
             snapshot.connectionState == ConnectionState.waiting
                 ? Center(
-                    child: CircularProgressIndicator(),
+                    child: SpinKitFadingCircle(
+                      color: Colors.blue,
+                      size: 50.0,
+                    ),
                   )
                 : RefreshIndicator(
                     onRefresh: () => _refreshProducts(context),
