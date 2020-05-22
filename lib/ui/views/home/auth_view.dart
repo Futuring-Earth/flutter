@@ -1,10 +1,10 @@
 import 'dart:math';
 
+import 'package:app/core/models/http_exception.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
-import '../../core/models/http_exception.dart';
 import 'package:app/core/services/auth/http_auth_service.dart';
 
 enum AuthMode { Signup, Login }

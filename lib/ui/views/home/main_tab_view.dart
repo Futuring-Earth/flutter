@@ -1,13 +1,12 @@
+import 'package:app/ui/views/activity/activity_view.dart';
+import 'package:app/ui/views/challenges/edit_challenge_view.dart';
 import 'package:app/ui/views/chat/search_page.dart';
 import 'package:app/ui/views/inspiration/inspiration_view.dart';
 import 'package:app/ui/views/challenges/challenges_view.dart';
+import 'package:app/ui/views/profile/profile_appdrawer.dart';
+import 'package:app/ui/views/profile/profile_view.dart';
+import 'package:app/ui/widgets/adaptive_scaffold.dart';
 import 'package:flutter/material.dart';
-
-import './activity/activity_view.dart';
-import './profile/profile_view.dart';
-import '../widgets/adaptive_scaffold.dart';
-import '../views/challenges/edit_challenge_view.dart';
-import 'profile/profile_appdrawer.dart';
 
 class MainTabView extends StatefulWidget {
   @override

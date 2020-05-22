@@ -1,5 +1,5 @@
 import 'package:app/core/models/user.dart';
-import 'package:app/ui/views/main_tab_view.dart';
+import 'package:app/ui/views/home/main_tab_view.dart';
 
 import 'package:app/ui/views/sign_in/sign_in_page.dart';
 import 'package:flutter/material.dart';
