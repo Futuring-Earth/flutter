@@ -1,6 +1,7 @@
-import 'package:app/ui/views/home/home_view_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+
+import 'home_view_mobile.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key key}) : super(key: key);
@@ -10,7 +11,7 @@ class HomeView extends StatelessWidget {
     return Container(
       child: ScreenTypeLayout(
         tablet: HomeViewMobile(),
-        mobile: HomeViewMobile(),
+        mobile: HomeViewMobile(), //HomeViewMobile(),
       ), //.showCursorOnHover.moveUpOnHover,
     );
   }

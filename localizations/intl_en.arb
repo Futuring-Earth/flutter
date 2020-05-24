@@ -1,0 +1,26 @@
+{
+ "onboarding1widgetWillkommenBeiFuturText": "Willkommen bei Futuring! \n",
+ "@onboarding1widgetWillkommenBeiFuturText": {
+  "type": "text",
+  "placeholders": {
+  }
+ },
+ "onboarding1widgetWieDurfenWirDichText": "Wie dürfen wir dich nennen?",
+ "@onboarding1widgetWieDurfenWirDichText": {
+  "type": "text",
+  "placeholders": {
+  }
+ },
+ "onboarding1widgetTheaTextField": "Thea",
+ "@onboarding1widgetTheaTextField": {
+  "type": "text",
+  "placeholders": {
+  }
+ },
+ "onboarding1widgetMainCtaButton": "Los geht’s",
+ "@onboarding1widgetMainCtaButton": {
+  "type": "text",
+  "placeholders": {
+  }
+ }
+}

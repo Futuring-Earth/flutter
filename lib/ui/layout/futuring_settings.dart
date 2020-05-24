@@ -1,5 +1,6 @@
 import 'package:app/ui/views/chat/recent_conversationSnippets_view.dart';
 import 'package:app/ui/views/chat/search_page.dart';
+import 'package:app/ui/views/sketch/onboarding/onboarding1_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/ui/views/activity/activity_view.dart';
@@ -50,6 +51,7 @@ class FuturingSettings {
       RecentConversationSnippetsView.routeName: (ctx) =>
           RecentConversationSnippetsView(),
       SearchPage.routeName: (ctx) => SearchPage(),
+      Onboarding1Widget.routeName: (ctx) => Onboarding1Widget(),
       //AuthWidget.routeName: (ctx) => AuthWidget(userSnapshot: userSnapshot),
       // '/': (ctx) => EmailLinkErrorPresenter.create(
       //       ctx,

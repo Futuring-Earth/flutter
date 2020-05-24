@@ -1,10 +1,11 @@
 import 'package:app/ui/views/activity/activity_view.dart';
-import 'package:app/ui/views/challenges/edit_challenge_view.dart';
 import 'package:app/ui/views/chat/search_page.dart';
 import 'package:app/ui/views/inspiration/inspiration_view.dart';
 import 'package:app/ui/views/challenges/challenges_view.dart';
 import 'package:app/ui/views/profile/profile_appdrawer.dart';
 import 'package:app/ui/views/profile/profile_view.dart';
+// import 'package:app/ui/views/sketch/home/homeview.dart';
+import 'package:app/ui/views/sketch/onboarding/onboarding1_view.dart';
 import 'package:app/ui/widgets/adaptive_scaffold.dart';
 import 'package:flutter/material.dart';
 
@@ -59,7 +60,7 @@ class _HomeViewMobileState extends State<HomeViewMobile> {
           icon: const Icon(Icons.add),
           onPressed: () {
             // NavigationService.instance.pushNamed(EditChallengesView.routeName);
-            Navigator.of(context).pushNamed(EditChallengesView.routeName);
+            Navigator.of(context).pushNamed(Onboarding1Widget.routeName);
           },
         ),
         IconButton(
