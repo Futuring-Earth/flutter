@@ -9,7 +9,15 @@ class FirestoreService {
   static final FirestoreService instance = FirestoreService._();
 
   FirestoreService._() {
+    Firestore.instance.settings(
+        host: '10.0.2.2:8080', sslEnabled: false, persistenceEnabled: false);
+
     _db = Firestore.instance;
+    //only include this for local development
+    // _db
+    //     .settings(
+    //         host: '10.0.2.2:8080', sslEnabled: false, persistenceEnabled: false)
+    //     .catchError((e) => print("Emulator switch error: $e"));
   }
 
   Future<String> setNewData({
